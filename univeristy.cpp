@@ -17,3 +17,8 @@ void University::dispalayBase() {
         << university_[i].getGender() << '\n';
     }
 }
+
+void University::addStudent(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender) {
+    Student newStudent(name, l_name, adress, indexNumber, pesel, gender);
+    university_.push_back(newStudent);
+}

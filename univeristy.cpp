@@ -17,13 +17,14 @@ void University::dispalayBase() {
                   << university_[i].getGender() << '\n';
     }
 }
-
+// Implemented sort by pesel
 void University::sortByPesel() {
     std::sort(university_.begin(), university_.end(),
               [](const Student& lhsPtr, const Student& rhsPtr) {
                   return lhsPtr.getPesel() < rhsPtr.getPesel();
               });
 }
+// Implemented sort by LName
 void University::sortbyLname() {
     std::sort(university_.begin(), university_.end(),
               [](const Student& lhsPtr, const Student& rhsPtr) {

@@ -17,7 +17,15 @@ void University::dispalayBase() {
                   << university_[i].getGender() << '\n';
     }
 }
-// Implemented sort by pesel
+
+
+ student-add
+void University::addStudent(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender) {
+    Student newStudent(name, l_name, adress, indexNumber, pesel, gender);
+    university_.push_back(newStudent);
+}
+
+
 void University::sortByPesel() {
     std::sort(university_.begin(), university_.end(),
               [](const Student& lhsPtr, const Student& rhsPtr) {
@@ -31,3 +39,4 @@ void University::sortbyLname() {
                   return lhsPtr.getLname() < rhsPtr.getLname();
               });
 }
+

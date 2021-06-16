@@ -18,11 +18,13 @@ void University::dispalayBase() {
     }
 }
 
+
  student-add
 void University::addStudent(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender) {
     Student newStudent(name, l_name, adress, indexNumber, pesel, gender);
     university_.push_back(newStudent);
 }
+
 
 void University::sortByPesel() {
     std::sort(university_.begin(), university_.end(),
@@ -30,10 +32,11 @@ void University::sortByPesel() {
                   return lhsPtr.getPesel() < rhsPtr.getPesel();
               });
 }
+// Implemented sort by LName
 void University::sortbyLname() {
     std::sort(university_.begin(), university_.end(),
               [](const Student& lhsPtr, const Student& rhsPtr) {
                   return lhsPtr.getLname() < rhsPtr.getLname();
               });
 }
-master
+

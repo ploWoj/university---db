@@ -3,6 +3,8 @@
 Student::Student(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender)
     : name_(name), l_name_(l_name), adress_(adress), indexNumber_(indexNumber), pesel_(pesel), gender_(gender){};
 
+Student::~Student() {}
+
 void Student::setName(const std::string& name) {
     name_ = name;
 }

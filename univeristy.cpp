@@ -1,6 +1,6 @@
-#include "student.hpp"
 #include "univeristy.hpp"
 
+#include "student.hpp"
 
 University::University(const Student& s) {
     university_.push_back(s);
@@ -8,12 +8,25 @@ University::University(const Student& s) {
 University::~University() {}
 
 void University::dispalayBase() {
-    for (int i = 0; i < university_.size() -1; i++) {
-        std::cout << i << "." << university_[i].getName() <<", " 
-        << university_[i].getLname() << ", " 
-        << university_[i].getAdress() << ", "
-        << university_[i].getIndex() << ", "
-        << university_[i].getPesel() << ", "
-        << university_[i].getGender() << '\n';
+    for (int i = 0; i < university_.size() - 1; i++) {
+        std::cout << i << "." << university_[i].getName() << ", "
+                  << university_[i].getLname() << ", "
+                  << university_[i].getAdress() << ", "
+                  << university_[i].getIndex() << ", "
+                  << university_[i].getPesel() << ", "
+                  << university_[i].getGender() << '\n';
     }
+}
+
+void University::sortByPesel() {
+    std::sort(university_.begin(), university_.end(),
+              [](const Student& lhsPtr, const Student& rhsPtr) {
+                  return lhsPtr.getPesel() < rhsPtr.getPesel();
+              });
+}
+void University::sortbyLname() {
+    std::sort(university_.begin(), university_.end(),
+              [](const Student& lhsPtr, const Student& rhsPtr) {
+                  return lhsPtr.getLname() < rhsPtr.getLname();
+              });
 }

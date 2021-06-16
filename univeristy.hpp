@@ -17,8 +17,8 @@ public:
     void addStudent();
     Student findBySurname(const std::string&);
     Student findByPesel(const long long&);
-    void sortByPesel(const long long&);
-    void sortbyLname(const std::string&);
+    void sortByPesel();
+    void sortbyLname();
     void removeByIndexNumber();
   
     //bool validationByPESEL();

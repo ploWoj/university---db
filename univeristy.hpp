@@ -14,7 +14,7 @@ public:
     ~University();
    
     void dispalayBase();
-    void addStudent(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender);
+    void addStudent(std::string, std::string, std::string, long long, long long, std::string);
     Student findBySurname(const std::string&);
     Student findByPesel(const long long&);
     void sortByPesel();

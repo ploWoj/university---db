@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <vector> 
-#include "student.hpp"
+#include "Student.hpp"
 
 class University
 {
@@ -15,8 +15,8 @@ public:
    
     void dispalayBase();
     void addStudent(std::string, std::string, std::string, long long, long long, std::string);
-    Student findBySurname(const std::string&);
-    Student findByPesel(const long long&);
+    Student* findBySurname(const std::string&);
+    Student* findByPesel(const long long&);
     void sortByPesel();
     void sortbyLname();
     void removeByIndexNumber();

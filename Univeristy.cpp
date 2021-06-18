@@ -18,33 +18,34 @@ void University::dispalayBase() {
     }
 }
 
-void University::addStudent(std::string name, std::string l_name, std::string adress, long long indexNumber, long long pesel, std::string gender) {
+void University::addStudent(std::string name, std::string l_name, std::string adress, size_t indexNumber, std::string pesel, std::string gender) {
     Student newStudent(name, l_name, adress, indexNumber, pesel, gender);
     university_.push_back(newStudent);
 }
 
-Student* University::findBySurname(const std::string& surname){
-    auto isTheSame = [](Student* student){ return student -> getSurname() == surname; };
+Student University::findBySurname(const std::string& surname){
+    auto isTheSame = [](Student student){ return student.getLname() == surname; };
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
     if (result == university.end()) {
         std::cout << "There is no such student in our database with given surname" << '\n';
-        return nullptr;//nie wiem ??
+        return -1;
     }
  
-    return result;
+    return *result;
 }
  
-Student* University::findByPesel(const long long& pesel){
-    auto isTheSame = [](Student* student){ return student -> getPesel() == pesel; };
+Student University::findByPesel(const std::string& pesel){
+    auto isTheSame = [](Student student){ return student.getPesel() == pesel; };
+
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
     if (result == university.end()) {
         std::cout << "There is no such student in our database with given PESEL number" << '\n';
-        return nullptr;//nie wiem co tutaj ??
+        return -1;
     }
  
-    return result;
+    return *result;
 }
 
 void University::sortByPesel() {
@@ -59,5 +60,26 @@ void University::sortbyLname() {
               [](const Student& lhsPtr, const Student& rhsPtr) {
                   return lhsPtr.getLname() < rhsPtr.getLname();
               });
+}
+
+bool University::validationByPesel(const std::string& pesel){
+    static constexpr std::array<int,10> weightFactors {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+    int result = 0;
+    int number = 0;
+    
+    for(size_t i = 0; i < weightFactors.size(); i++){
+        number = pesel[i] - '0';
+        result += number*weightFactors[i];
+    }
+    
+    result = result % weightFactor.size();
+    
+    if (result != 0) {
+        result = weightFactors.size() - result;
+    }
+    
+    int lastNumber = (pesel.back()-'0');
+
+    return result == lastNumber;
 }
 

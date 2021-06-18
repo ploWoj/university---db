@@ -14,14 +14,14 @@ public:
     ~University();
    
     void dispalayBase();
-    void addStudent(std::string, std::string, std::string, long long, long long, std::string);
-    Student* findBySurname(const std::string&);
-    Student* findByPesel(const long long&);
+    void addStudent(std::string, std::string, std::string, size_t, std::string, std::string);
+    Student findBySurname(const std::string&);
+    Student findByPesel(const std::string&);
     void sortByPesel();
     void sortbyLname();
     void removeByIndexNumber();
-  
-    //bool validationByPESEL();
+    bool validationByPESEL(const std::string&);  
+    
     //void writeToFIle();
     //void readFile();
 

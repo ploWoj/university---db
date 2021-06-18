@@ -18,7 +18,7 @@ void Student::setAdress(const std::string& adress) {
 void Student::setIndex(const size_t indexNumber) {
     indexNumber_ = indexNumber;
 }
-void Student::setPesel(const std::student& pesel) {
+void Student::setPesel(const std::string& pesel) {
     pesel_ = pesel;
 }
 void Student::setGender(const std::string& gender) {

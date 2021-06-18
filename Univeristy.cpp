@@ -7,6 +7,16 @@ University::University(const Student& s) {
 }
 University::~University() {}
 
+
+void University::displayStudent(const Student& student) {
+    std::cout << student.getName() << ", "
+            << student.getLname() << ", "
+            << student.getAdress() << ", "
+            << student.getIndex() << ", "
+            << student.getPesel() << ", "
+            << student.getGender() << '\n';
+}
+
 void University::dispalayBase() {
     for (int i = 0; i < university_.size() - 1; i++) {
         std::cout << i << "." << university_[i].getName() << ", "
@@ -24,25 +34,25 @@ void University::addStudent(std::string name, std::string l_name, std::string ad
 }
 
 Student University::findBySurname(const std::string& surname){
-    auto isTheSame = [](Student student){ return student.getLname() == surname; };
+    auto isTheSame = [&surname](Student student){ return student.getLname() == surname; };
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
-    if (result == university.end()) {
+    if (result == university_.end()) {
         std::cout << "There is no such student in our database with given surname" << '\n';
-        return -1;
+        return *result;
     }
  
     return *result;
 }
  
 Student University::findByPesel(const std::string& pesel){
-    auto isTheSame = [](Student student){ return student.getPesel() == pesel; };
+    auto isTheSame = [&pesel](Student student){ return student.getPesel() == pesel; };
 
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
-    if (result == university.end()) {
+    if (result == university_.end()) {
         std::cout << "There is no such student in our database with given PESEL number" << '\n';
-        return -1;
+        return *result;
     }
  
     return *result;
@@ -72,7 +82,7 @@ bool University::validationByPesel(const std::string& pesel){
         result += number*weightFactors[i];
     }
     
-    result = result % weightFactor.size();
+    result = result % weightFactors.size();
     
     if (result != 0) {
         result = weightFactors.size() - result;

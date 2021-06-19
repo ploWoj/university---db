@@ -11,26 +11,26 @@ private:
     std::string name_;
     std::string l_name_;
     std::string adress_;
-    long long indexNumber_;
-    long long pesel_;
+    size_t indexNumber_;
+    std::string pesel_;
     std::string gender_;
 
 public:
     void setName(const std::string&);
     void setLname(const std::string&);
     void setAdress(const std::string&);
-    void setIndex(const long long&);
-    void setPesel(const long long&);
+    void setIndex(const size_t);
+    void setPesel(const std::string&);
     void setGender(const std::string&);
     
     std::string getName() const;
     std::string getLname() const;
     std::string getAdress() const;
-    long long getIndex() const;
-    long long getPesel() const;
+    size_t getIndex() const;
+    std::string getPesel() const;
     std::string getGender() const;
     
     Student() = default;
-    Student(std::string name, std::string surname, std::string adress, long long indexNumber, long long pesel, std::string gender);
+    Student(std::string name, std::string surname, std::string adress, size_t indexNumber, std::string pesel, std::string gender);
     ~Student();
 };

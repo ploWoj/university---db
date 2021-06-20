@@ -74,12 +74,6 @@ int main() {
         std::cout << " PESEL is valid" << '\n';
     }
 
-    std::cout << '\n' << "=====================================" << '\n';
-    std::cout << '\n' << "        TEST University methods      " << '\n';
-    codersSchool.findBySurname("NOwak");
-    codersSchool.findBySurname("Nowak");
-
-
     return 0;
 }
 

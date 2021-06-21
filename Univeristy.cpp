@@ -20,7 +20,7 @@ void University::displayStudent(const Student& student) {
 void University::displayBase() {
     if (university_.size() == 0) {
         std::cout << "Database is empty\n";
-    }
+    } else
     for (int i = 0; i < university_.size(); i++) {
         std::cout << i << "." << university_[i].getName() << ", "
                   << university_[i].getLname() << ", "

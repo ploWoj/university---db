@@ -27,7 +27,7 @@ int main() {
         std::cout << " PESEL is valid" << '\n';
     }
     //codersSchool.importDatabase();
-    //codersSchool.dispalayBase();
+    //codersSchool.displayBase();
     
     return 0;
 }

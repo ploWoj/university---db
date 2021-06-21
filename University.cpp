@@ -33,7 +33,11 @@ void University::displayBase() {
 }
 
 void University::addStudent(std::string name, std::string l_name, std::string adress, size_t indexNumber, std::string pesel, std::string gender) {
-    university_.emplace_back(std::make_unique<Student>(name, l_name, adress, indexNumber, pesel, gender));
+    if (!findByPesel(pesel)) {
+        university_.emplace_back(std::make_unique<Student>(name, l_name, adress, indexNumber, pesel, gender));
+    } else {
+        std::cout << "There is such student in our database" << '\n';
+    }
 }
 
 Student* University::findBySurname(const std::string& surname){

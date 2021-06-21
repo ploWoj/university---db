@@ -8,10 +8,8 @@
 
 class University
 {
-    
-public:
     std::vector<Student> university_;
-        
+public:
     University(const Student&);
     ~University();
   

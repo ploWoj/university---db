@@ -14,7 +14,7 @@ public:
     ~University();
   
     void displayStudent(const Student&);
-    void dispalayBase();
+    void displayBase();
     void addStudent(std::string, std::string, std::string, size_t, std::string, std::string);
     Student findBySurname(const std::string&);
     Student findByPesel(const std::string&);

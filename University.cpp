@@ -8,13 +8,17 @@ University::University(const Student& s) {
 University::~University() {}
 
 
-void University::displayStudent(const Student& student) {
-    std::cout << student.getName() << ", "
-            << student.getLname() << ", "
-            << student.getAdress() << ", "
-            << student.getIndex() << ", "
-            << student.getPesel() << ", "
-            << student.getGender() << '\n';
+void University::displayStudent(const Student* student) {
+    if (student) {
+        std::cout << student -> getName() << ", "
+             << student -> getLname() << ", "
+             << student -> getAdress() << ", "
+             << student -> getIndex() << ", "
+             << student -> getPesel() << ", "
+             << student -> getGender() << '\n';
+    } else { 
+        std::cout << "There is no such student in our database with given PESEL number" << '\n';
+    }
 }
 
 void University::displayBase() {
@@ -32,29 +36,33 @@ void University::addStudent(std::string name, std::string l_name, std::string ad
     university_.emplace_back(std::make_unique<Student>(name, l_name, adress, indexNumber, pesel, gender));
 }
 
-Student University::findBySurname(const std::string& surname){
+Student* University::findBySurname(const std::string& surname){
     auto isTheSame = [&surname](std::unique_ptr<Student>& student){ return student -> getLname() == surname; };
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
     if (result == university_.end()) {
-        std::cout << "There is no such student in our database with given surname" << '\n';
-        return **result;
+        //std::cout << "There is no such student in our database with given surname" << '\n';
+        return nullptr;
     }
+
+    Student* student_ptr = result -> get();
  
-    return **result;
+    return student_ptr;
 }
  
-Student University::findByPesel(const std::string& pesel){
+Student* University::findByPesel(const std::string& pesel){
     auto isTheSame = [&pesel](std::unique_ptr<Student>& student){ return student -> getPesel() == pesel; };
 
     auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
  
     if (result == university_.end()) {
-        std::cout << "There is no such student in our database with given PESEL number" << '\n';
-        return **result;
+        //std::cout << "There is no such student in our database with given PESEL number" << '\n';
+        return nullptr;
     }
+
+    Student* student_ptr = result -> get();
  
-    return **result;
+    return student_ptr;
 }
 
 void University::sortByPesel() {

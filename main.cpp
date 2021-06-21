@@ -2,7 +2,7 @@
 #include "University.hpp"
 
 int main() {
-    
+    std::string pes1 = "88111507706";    
     std::string pes = "55030101230";
     Student s1("Danuta", "Kot", "Warszawa", 166735, "89873561722", "man");
     University codersSchool(s1);
@@ -18,10 +18,10 @@ int main() {
     codersSchool.sortbyLname();
     codersSchool.displayBase();
     std::cout << '\n' << "=====================================" << '\n';
-    codersSchool.displayStudent(codersSchool.findByPesel(pes));
+    codersSchool.displayStudent(codersSchool.findByPesel(pes1));
 
     auto stud = codersSchool.findByPesel(pes);
-    if (codersSchool.validationByPesel(stud.getPesel())) {
+    if (codersSchool.validationByPesel(stud -> getPesel())) {
         std::cout << "PESEL is correct" << '\n';
     } else {
         std::cout << " PESEL is valid" << '\n';

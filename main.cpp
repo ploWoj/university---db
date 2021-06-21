@@ -56,13 +56,13 @@ int main() {
     codersSchool.addStudent("Martyna", "Tucholska", "Wroclaw", 162780, "55030101230", "woman");
     codersSchool.addStudent("Wanda", "Nowak" , "Lodz", 162576, "88530287659", "woman");
     codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", 165729, "85111507574", "man");
-    codersSchool.dispalayBase();
+    codersSchool.displayBase();
     std::cout << '\n' << "=====================================" << '\n';
     codersSchool.sortByPesel();
-    codersSchool.dispalayBase();
+    codersSchool.displayBase();
     std::cout << '\n' << "=====================================" << '\n';
     codersSchool.sortbyLname();
-    codersSchool.dispalayBase();
+    codersSchool.displayBase();
     std::cout << '\n' << "=====================================" << '\n';
     codersSchool.displayStudent(codersSchool.findByPesel(pes));
 

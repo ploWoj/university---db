@@ -64,23 +64,23 @@ TEST(UniversityDisplayBaseAndAddStudentTest, ShouldVerifyUniversityDisplayBaseAn
     testUni.addStudent("Martyna", "Tucholska", "Wroclaw", 162780, "55030101230", "woman");
     testUni.addStudent("Wanda", "Nowak", "Lodz", 162576, "88530287659", "woman");
     testUni.addStudent("Ryszard", "Arbuz", "Gdynia", 165729, "85111507574", "man");
-    testUni.dispalayBase();
+    testUni.displayBase();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Alex, Test, City, 666666, 56073561722, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n3.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
+    EXPECT_EQ("0.Alex, Test, City, 666666, 56073561722, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n3.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n4.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n", output);
 }
 TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
     testing::internal::CaptureStdout();
     testUni.sortByPesel();
-    testUni.dispalayBase();
+    testUni.displayBase();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n1.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n2.Alex, Test, City, 666666, 56073561722, man\n3.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n", output);
+    EXPECT_EQ("0.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n1.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n2.Alex, Test, City, 666666, 56073561722, man\n3.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n4.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
 }
 TEST(UniversitySortByLNameTest, ShouldVerifyUniversitySortByLName) {
     testing::internal::CaptureStdout();
     testUni.sortbyLname();
-    testUni.dispalayBase();
+    testUni.displayBase();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n3.Alex, Test, City, 666666, 56073561722, man\n", output);
+    EXPECT_EQ("0.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n3.Alex, Test, City, 666666, 56073561722, man\n4.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n", output);
 }
 TEST(UniversityPeselTest, ShouldVerifyUniversityPesel) {
     EXPECT_EQ(testUni.validationByPesel("89873561722"), false);

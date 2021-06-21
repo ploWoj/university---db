@@ -11,9 +11,7 @@
 class University
 {
     std::vector<std::unique_ptr<Student>> university_;
-
 public:
-        
     University(const Student&);
     ~University();
   

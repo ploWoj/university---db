@@ -33,7 +33,8 @@ void University::displayBase() {
 }
 
 void University::addStudent() {
-    university_.emplace_back();
+    Student newStudent;
+    university_.push_back(std::make_unique<Student>(newStudent));
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
@@ -121,7 +122,7 @@ void University::exportDatabase() {
         }
         Database.close();
     } else
-        std::cout << "Unable to open file";
+        std::cout << "Unable to save file";
 }
 
 void University::importDatabase() {
@@ -129,8 +130,8 @@ void University::importDatabase() {
     std::string line;
     if (Database.is_open()) {
         size_t iLine = 0;
-        University::addStudent();
-        while (Database.peek()) {
+        while (Database.peek() != EOF) {
+            University::addStudent();
             getline(Database, line, ',');
             university_[iLine]->setName(line);
             getline(Database, line, ',');
@@ -141,15 +142,15 @@ void University::importDatabase() {
             university_[iLine]->setIndex(std::stoi(line));
             getline(Database, line, ',');
             university_[iLine]->setPesel(line);
-            getline(Database, line, ',');
+            getline(Database, line, '\n');
             university_[iLine]->setGender(line);
             iLine += 1;
         }
         Database.close();
     } else
         std::cout << "Unable to open file";
-
 }
+
 void University::deletedByIndexNumber(){
     size_t IndexNumber;
     std::cout << " Take IndexNumver";

@@ -74,12 +74,11 @@ int main() {
 
     // export database
     codersSchool.exportDatabase();
-    codersSchool.displayBase();
 
     // import database
-    University databaseImported;
-    // databaseImported.importDatabase();
-    databaseImported.displayBase();
+    University importedDatabase;
+    importedDatabase.importDatabase();
+    importedDatabase.displayBase();
 
     return 0;
 }

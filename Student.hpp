@@ -11,7 +11,7 @@ class Student {
     std::string name_;
     std::string surname_;
     std::string address_;
-    size_t indexNumber_;
+    size_t indexNumber_ {0};
     std::string pesel_;
     std::string gender_;
 
@@ -30,7 +30,7 @@ class Student {
     std::string getPesel() const;
     std::string getGender() const;
 
-    Student() = default;
+    Student();
     Student(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender);
     ~Student();
 };

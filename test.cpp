@@ -1,72 +1,77 @@
-#include <tuple>
-
 #include "Student.hpp"
-#include "Univeristy.hpp"
+#include "University.hpp"
 #include "gtest/gtest.h"
 
-Student s1("Alex", "Test", "City", 666666, "56073561722", "man");
+Student* initStudent = new Student("Alex", "Test", "City", 666666, "56073561722", "man");
 
 //Start Student class tests
 TEST(StudentGetNameTest, ShouldVerifyStudentGetName) {
-    EXPECT_EQ(s1.getName(), "Alex");
+    EXPECT_EQ(initStudent->getName(), "Alex");
 }
-TEST(StudentGetLNameTest, ShouldVerifyStudentGetLName) {
-    EXPECT_EQ(s1.getLname(), "Test");
+TEST(StudentGetSurnameTest, ShouldVerifyStudentGetSurname) {
+    EXPECT_EQ(initStudent->getSurname(), "Test");
 }
-TEST(StudentGetAdressTest, ShouldVerifyStudentGetAdress) {
-    EXPECT_EQ(s1.getAdress(), "City");
+TEST(StudentGetAddressTest, ShouldVerifyStudentGetAddress) {
+    EXPECT_EQ(initStudent->getAddress(), "City");
 }
 TEST(StudentGetIndexTest, ShouldVerifyStudentGetIndex) {
-    EXPECT_EQ(s1.getIndex(), 666666);
+    EXPECT_EQ(initStudent->getIndex(), 666666);
 }
 TEST(StudentGetPeselTest, ShouldVerifyStudentGetPesel) {
-    EXPECT_EQ(s1.getPesel(), "56073561722");
+    EXPECT_EQ(initStudent->getPesel(), "56073561722");
 }
 TEST(StudentGetGenderTest, ShouldVerifyStudentGetGender) {
-    EXPECT_EQ(s1.getGender(), "man");
+    EXPECT_EQ(initStudent->getGender(), "man");
 }
 TEST(StudentSetNameTest, ShouldVerifyStudentSetName) {
-    s1.setName("Joe");
-    EXPECT_EQ(s1.getName(), "Joe");
+    initStudent->setName("Joe");
+    EXPECT_EQ(initStudent->getName(), "Joe");
 }
-TEST(StudentSetLNameTest, ShouldVerifyStudentSetLName) {
-    s1.setLname("Black");
-    EXPECT_EQ(s1.getLname(), "Black");
+TEST(StudentSetSurnameTest, ShouldVerifyStudentSetSurname) {
+    initStudent->setSurname("Black");
+    EXPECT_EQ(initStudent->getSurname(), "Black");
 }
-TEST(StudentSetAdressTest, ShouldVerifyStudentSetAdress) {
-    s1.setAdress("New York");
-    EXPECT_EQ(s1.getAdress(), "New York");
+TEST(StudentSetAddressTest, ShouldVerifyStudentSetAddress) {
+    initStudent->setAddress("New York");
+    EXPECT_EQ(initStudent->getAddress(), "New York");
 }
 TEST(StudentSetIndexTest, ShouldVerifyStudentSetIndex) {
-    s1.setIndex(134546);
-    EXPECT_EQ(s1.getIndex(), 134546);
+    initStudent->setIndex(134546);
+    EXPECT_EQ(initStudent->getIndex(), 134546);
 }
 TEST(StudentSetPeselTest, ShouldVerifyStudentSetPesel) {
-    s1.setPesel("84091234651");
-    EXPECT_EQ(s1.getPesel(), "84091234651");
+    initStudent->setPesel("84091234651");
+    EXPECT_EQ(initStudent->getPesel(), "84091234651");
 }
 TEST(StudentSetGenderTest, ShouldVerifyStudentSetGender) {
-    s1.setGender("woman");
-    EXPECT_EQ(s1.getGender(), "woman");
+    initStudent->setGender("woman");
+    EXPECT_EQ(initStudent->getGender(), "woman");
 }
 // End Student class tests
-University testUni(s1);
+University testUniversityDB(*initStudent);
 
 TEST(UniversityDisplayStudentTest, ShouldVerifyUniversityDisplayStudent) {
     testing::internal::CaptureStdout();
-    testUni.displayStudent(s1);
+    testUniversityDB.displayStudent(initStudent);
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("Joe, Black, New York, 134546, 84091234651, woman\n", output);
 }
 TEST(UniversityDisplayBaseAndAddStudentTest, ShouldVerifyUniversityDisplayBaseAndAddStudent) {
     testing::internal::CaptureStdout();
-    testUni.addStudent("Wojtek", "Kowalski", "Miedzychod", 162589, "45454545454", "man");
-    testUni.addStudent("Martyna", "Tucholska", "Wroclaw", 162780, "55030101230", "woman");
-    testUni.addStudent("Wanda", "Nowak", "Lodz", 162576, "88530287659", "woman");
-    testUni.addStudent("Ryszard", "Arbuz", "Gdynia", 165729, "85111507574", "man");
-    testUni.displayBase();
+    testUniversityDB.addStudent("Wojtek", "Kowalski", "Miedzychod", 162589, "45454545454", "man");
+    testUniversityDB.addStudent("Martyna", "Tucholska", "Wroclaw", 162780, "55030101230", "woman");
+    testUniversityDB.addStudent("Wanda", "Nowak", "Lodz", 162576, "88530287659", "woman");
+    testUniversityDB.addStudent("Ryszard", "Arbuz", "Gdynia", 165729, "85111507574", "man");
+    testUniversityDB.displayBase();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Alex, Test, City, 666666, 56073561722, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n3.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n4.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n", output);
+    EXPECT_EQ("Alex, Test, City, 666666, 56073561722, man\nWojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nMartyna, Tucholska, Wroclaw, 162780, 55030101230, woman\nWanda, Nowak, Lodz, 162576, 88530287659, woman\nRyszard, Arbuz, Gdynia, 165729, 85111507574, man\n", output);
+}
+TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
+    testing::internal::CaptureStdout();
+    testUniversityDB.sortByPesel();
+    testUniversityDB.displayBase();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nMartyna, Tucholska, Wroclaw, 162780, 55030101230, woman\nAlex, Test, City, 666666, 56073561722, man\nRyszard, Arbuz, Gdynia, 165729, 85111507574, man\nWanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
 }
 TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
     testing::internal::CaptureStdout();
@@ -75,37 +80,40 @@ TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("0.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n1.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n2.Alex, Test, City, 666666, 56073561722, man\n3.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n4.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
 }
-TEST(UniversitySortByLNameTest, ShouldVerifyUniversitySortByLName) {
+TEST(UniversitySortBySurnameTest, ShouldVerifyUniversitySortBySurname) {
     testing::internal::CaptureStdout();
-    testUni.sortbyLname();
-    testUni.displayBase();
+    testUniversityDB.sortBySurname();
+    testUniversityDB.displayBase();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n1.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n2.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n3.Alex, Test, City, 666666, 56073561722, man\n4.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n", output);
+    EXPECT_EQ("Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\nWojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nWanda, Nowak, Lodz, 162576, 88530287659, woman\nAlex, Test, City, 666666, 56073561722, man\nMartyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n", output);
 }
 TEST(UniversityPeselTest, ShouldVerifyUniversityPesel) {
-    EXPECT_EQ(testUni.validationByPesel("89873561722"), false);
-    EXPECT_EQ(testUni.validationByPesel("55030101230"), true);
+    EXPECT_EQ(testUniversityDB.validationByPesel("89873561722"), false);
+    EXPECT_EQ(testUniversityDB.validationByPesel("55030101230"), true);
 }
 TEST(UniversityFindBySurnameTest, ShouldVerifyUniversityFindBySurname) {
-    testing::internal::CaptureStdout();
-    testUni.displayStudent(testUni.findBySurname("Nowak"));
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("Wanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
+    // Existing students in university database
+    EXPECT_TRUE(testUniversityDB.findBySurname("Nowak") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Arbuz") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Kowalski") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Test") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Tucholska") != nullptr);
 
-    testing::internal::CaptureStdout();
-    testUni.displayStudent(testUni.findBySurname("NOwak"));
-    std::string outputBad = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("There is no such student in our database with given surname\n, , , 0, , \n", outputBad);
+    // Imagined student surnames
+    EXPECT_TRUE(testUniversityDB.findBySurname("NOwak") == nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Black") == nullptr);
+    EXPECT_TRUE(testUniversityDB.findBySurname("Ziobron") == nullptr);
 }
 
 TEST(UniversityFindByPeselTest, ShouldVerifyUniversityFindByPesel) {
-    testing::internal::CaptureStdout();
-    testUni.displayStudent(testUni.findByPesel("55030101230"));
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n", output);
-
-    testing::internal::CaptureStdout();
-    testUni.displayStudent(testUni.findByPesel("88599287659"));
-    std::string outputBad = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("There is no such student in our database with given PESEL number\n, , , 0, , \n", outputBad);
+    // Existing students in university database
+    EXPECT_TRUE(testUniversityDB.findByPesel("85111507574") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("45454545454") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("88530287659") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("56073561722") != nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("55030101230") != nullptr);
+    // Imagined student pesels
+    EXPECT_TRUE(testUniversityDB.findByPesel("88599287659") == nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("55030121230") == nullptr);
+    EXPECT_TRUE(testUniversityDB.findByPesel("56073961722") == nullptr);
 }

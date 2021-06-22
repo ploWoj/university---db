@@ -1,7 +1,7 @@
 #include "Student.hpp"
 
-Student::Student(std::string name, std::string l_name, std::string adress, size_t indexNumber, std::string pesel, std::string gender)
-    : name_(name), l_name_(l_name), adress_(adress), indexNumber_(indexNumber), pesel_(pesel), gender_(gender){};
+Student::Student(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender)
+    : name_(name), surname_(surname), address_(address), indexNumber_(indexNumber), pesel_(pesel), gender_(gender){};
 
 Student::~Student() {}
 
@@ -9,11 +9,11 @@ void Student::setName(const std::string& name) {
     name_ = name;
 }
 
-void Student::setLname(const std::string& l_name) {
-    l_name_ = l_name;
+void Student::setSurname(const std::string& surname) {
+    surname_ = surname;
 }
-void Student::setAdress(const std::string& adress) {
-    adress_ = adress;
+void Student::setAddress(const std::string& address) {
+    address_ = address;
 }
 void Student::setIndex(const size_t indexNumber) {
     indexNumber_ = indexNumber;
@@ -28,11 +28,11 @@ void Student::setGender(const std::string& gender) {
 std::string Student::getName() const {
     return name_;
 }
-std::string Student::getLname() const {
-    return l_name_;
+std::string Student::getSurname() const {
+    return surname_;
 }
-std::string Student::getAdress() const {
-    return adress_;
+std::string Student::getAddress() const {
+    return address_;
 }
 size_t Student::getIndex() const {
     return indexNumber_;

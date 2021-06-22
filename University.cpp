@@ -2,6 +2,7 @@
 
 #include "Student.hpp"
 
+University::University() {}
 University::University(const Student& s) {
     university_.emplace_back(std::make_unique<Student>(s));
 }
@@ -29,6 +30,10 @@ void University::displayBase() {
                   << student->getPesel() << ", "
                   << student->getGender() << '\n';
     }
+}
+
+void University::addStudent() {
+    university_.emplace_back();
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
@@ -124,6 +129,7 @@ void University::importDatabase() {
     std::string line;
     if (Database.is_open()) {
         size_t iLine = 0;
+        University::addStudent();
         while (Database.peek()) {
             getline(Database, line, ',');
             university_[iLine]->setName(line);

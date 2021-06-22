@@ -108,6 +108,7 @@ bool University::validationByPesel(const std::string& pesel) {
 
     return result == lastNumber;
 }
+
 void University::exportDatabase(std::string fileName) {
     std::ofstream Database;
     Database.open(fileName);

@@ -70,7 +70,11 @@ int main() {
     } else {
         std::cout << " PESEL is valid" << '\n';
     }
-    codersSchool.deletedByIndexNumber();
+    // delete by index number
+    size_t indexNumber = 0;
+    std::cout << " Take IndexNumber\n";
+    std::cin >> indexNumber;
+    codersSchool.deletedByIndexNumber(indexNumber);
 
     // export database
     std::cout << "\nExporting database to CSV file...\nEnter file name: ";

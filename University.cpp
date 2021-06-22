@@ -40,9 +40,9 @@ void University::addStudent() {
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
     if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Student>(name, surname, address, indexNumber, pesel, gender));
-    } else {
-        std::cout << "There is such student in our database" << '\n';
-    }
+    }  //else {
+    //     std::cout << "There is such student in our database" << '\n';
+    // }
 }
 
 Student* University::findBySurname(const std::string& surname) {
@@ -123,43 +123,55 @@ void University::exportDatabase(std::string fileName) {
         }
         Database.close();
     } else
-        std::cout << "Unable to save file";
+        std::cout << "Unable to save file\n";
 }
 
 void University::importDatabase(std::string fileName) {
     std::ifstream Database(fileName);
     std::string line;
+    //--------------------------------------
+    std::vector<std::string> rowLine = {};
+    //--------------------------------------
     if (Database.is_open()) {
         size_t iLine = 0;
         while (Database.peek() != EOF) {
-            addStudent();
             getline(Database, line, ',');
+            //rowLine.push_back(line);
             university_[iLine]->setName(line);
             getline(Database, line, ',');
+            //rowLine.push_back(line);
             university_[iLine]->setSurname(line);
             getline(Database, line, ',');
+            //rowLine.push_back(line);
             university_[iLine]->setAddress(line);
             getline(Database, line, ',');
+            //rowLine.push_back(line);
             university_[iLine]->setIndex(std::stoi(line));
             getline(Database, line, ',');
+            //rowLine.push_back(line);
             university_[iLine]->setPesel(line);
             getline(Database, line, '\n');
+            //rowLine.push_back(line);
             university_[iLine]->setGender(line);
+
+            // addStudent(rowLine.at(0),
+            //            rowLine.at(1),
+            //            rowLine.at(2),
+            //            std::stoi(rowLine.at(3)),
+            //            rowLine.at(4),
+            //            rowLine.at(5));
+
             iLine += 1;
         }
         Database.close();
     } else
-        std::cout << "Unable to open file";
+        std::cout << "Unable to open file\n";
 }
 
-void University::deletedByIndexNumber(){
-    size_t IndexNumber;
-    std::cout << " Take IndexNumver";
-    std::cin >> IndexNumber;
+void University::deletedByIndexNumber(size_t IndexNumber) {
     for (int i = 0; i < university_.size(); ++i) {
         if (IndexNumber == university_[i]->getIndex()) {
             university_.erase(university_.begin() + i);
         }
-     }
+    }
 }
-

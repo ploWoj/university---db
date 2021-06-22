@@ -72,7 +72,8 @@ int main() {
     }
     codersSchool.deletedByIndexNumber();
 
-    //codersSchool.importDatabase();
+    // export database
+    codersSchool.exportDatabase();
     codersSchool.displayBase();
 
     return 0;

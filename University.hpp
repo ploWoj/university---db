@@ -27,7 +27,7 @@ class University {
     void sortBySurname();
     void removeByIndexNumber();
     bool validationByPesel(const std::string&);
-    void exportDatabase();
-    void importDatabase();
+    void exportDatabase(std::string);
+    void importDatabase(std::string);
     void deletedByIndexNumber();
 };

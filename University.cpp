@@ -108,9 +108,9 @@ bool University::validationByPesel(const std::string& pesel) {
 
     return result == lastNumber;
 }
-void University::exportDatabase() {
+void University::exportDatabase(std::string fileName) {
     std::ofstream Database;
-    Database.open("university-db.csv");
+    Database.open(fileName);
     if (Database.is_open()) {
         for (auto& itStudent : university_) {
             Database << itStudent->getName() << ","
@@ -125,8 +125,8 @@ void University::exportDatabase() {
         std::cout << "Unable to save file";
 }
 
-void University::importDatabase() {
-    std::ifstream Database("university-db.csv");
+void University::importDatabase(std::string fileName) {
+    std::ifstream Database(fileName);
     std::string line;
     if (Database.is_open()) {
         size_t iLine = 0;

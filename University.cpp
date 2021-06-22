@@ -132,7 +132,7 @@ void University::importDatabase(std::string fileName) {
     if (Database.is_open()) {
         size_t iLine = 0;
         while (Database.peek() != EOF) {
-            University::addStudent();
+            addStudent();
             getline(Database, line, ',');
             university_[iLine]->setName(line);
             getline(Database, line, ',');

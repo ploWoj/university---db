@@ -2,6 +2,7 @@
 
 #include "Student.hpp"
 
+University::University() {}
 University::University(const Student& s) {
     university_.emplace_back(std::make_unique<Student>(s));
 }
@@ -29,6 +30,11 @@ void University::displayBase() {
                   << student->getPesel() << ", "
                   << student->getGender() << '\n';
     }
+}
+
+void University::addStudent() {
+    Student newStudent;
+    university_.push_back(std::make_unique<Student>(newStudent));
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
@@ -102,9 +108,10 @@ bool University::validationByPesel(const std::string& pesel) {
 
     return result == lastNumber;
 }
-void University::exportDatabase() {
+
+void University::exportDatabase(std::string fileName) {
     std::ofstream Database;
-    Database.open("university-db.csv");
+    Database.open(fileName);
     if (Database.is_open()) {
         for (auto& itStudent : university_) {
             Database << itStudent->getName() << ","
@@ -116,15 +123,16 @@ void University::exportDatabase() {
         }
         Database.close();
     } else
-        std::cout << "Unable to open file";
+        std::cout << "Unable to save file";
 }
 
-void University::importDatabase() {
-    std::ifstream Database("university-db.csv");
+void University::importDatabase(std::string fileName) {
+    std::ifstream Database(fileName);
     std::string line;
     if (Database.is_open()) {
         size_t iLine = 0;
-        while (Database.peek()) {
+        while (Database.peek() != EOF) {
+            addStudent();
             getline(Database, line, ',');
             university_[iLine]->setName(line);
             getline(Database, line, ',');
@@ -135,15 +143,15 @@ void University::importDatabase() {
             university_[iLine]->setIndex(std::stoi(line));
             getline(Database, line, ',');
             university_[iLine]->setPesel(line);
-            getline(Database, line, ',');
+            getline(Database, line, '\n');
             university_[iLine]->setGender(line);
             iLine += 1;
         }
         Database.close();
     } else
         std::cout << "Unable to open file";
-
 }
+
 void University::deletedByIndexNumber(){
     size_t IndexNumber;
     std::cout << " Take IndexNumver";

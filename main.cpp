@@ -72,8 +72,20 @@ int main() {
     }
     codersSchool.deletedByIndexNumber();
 
-    //codersSchool.importDatabase();
-    codersSchool.displayBase();
+    // export database
+    std::cout << "\nExporting database to CSV file...\nEnter file name: ";
+    std::string fileNameExport;
+    std::cin >> fileNameExport;
+    codersSchool.exportDatabase(fileNameExport);
+
+    // import database
+    std::cout << "\nImporting database to CSV file...\nEnter file name: ";
+    std::string fileNameImport;
+    std::cin >> fileNameImport;
+    University importedDatabase;
+    importedDatabase.importDatabase(fileNameImport);
+    std::cout << "\nImported database:\n";
+    importedDatabase.displayBase();
 
     return 0;
 }

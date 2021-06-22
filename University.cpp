@@ -142,4 +142,16 @@ void University::importDatabase() {
         Database.close();
     } else
         std::cout << "Unable to open file";
+
 }
+void University::deletedByIndexNumber(){
+    size_t IndexNumber;
+    std::cout << " Take IndexNumver";
+    std::cin >> IndexNumber;
+    for (int i = 0; i < university_.size(); ++i) {
+        if (IndexNumber == university_[i]->getIndex()) {
+            university_.erase(university_.begin() + i);
+        }
+     }
+}
+

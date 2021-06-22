@@ -27,4 +27,5 @@ class University {
     bool validationByPesel(const std::string&);
     void exportDatabase();
     void importDatabase();
+    void deletedByIndexNumber();
 };

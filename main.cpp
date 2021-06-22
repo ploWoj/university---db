@@ -70,9 +70,10 @@ int main() {
     } else {
         std::cout << " PESEL is valid" << '\n';
     }
+    codersSchool.deletedByIndexNumber();
 
     //codersSchool.importDatabase();
-    //codersSchool.displayBase();
+    codersSchool.displayBase();
 
     return 0;
 }

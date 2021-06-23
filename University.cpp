@@ -152,14 +152,14 @@ void University::importDatabase(std::string fileName) {
         std::cout << "Unable to open file";
 }
 
-void University::deletedByIndexNumber(){
+void University::deleteByIndexNumber() {
     size_t IndexNumber;
-    std::cout << " Take IndexNumver";
+    std::cout << "\nEnter index number: ";
     std::cin >> IndexNumber;
     for (int i = 0; i < university_.size(); ++i) {
         if (IndexNumber == university_[i]->getIndex()) {
             university_.erase(university_.begin() + i);
+            std::cout << "Student with index no. " << IndexNumber << " was erased.";
         }
-     }
+    }
 }
-

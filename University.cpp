@@ -139,22 +139,32 @@ void University::exportDatabase(std::string fileName) {
  void University::importDatabase(std::string fileName) {
      std::ifstream Database(fileName);
      std::string line;
+     std::vector<std::string> rowLine = {};
      if (Database.is_open()) {
          
          while (Database.peek() != EOF) {
-             addStudent();
+            // addStudent();
+            // university_.back()->setName(rowLine[0]);
+            // university_.back()->setSurname(rowLine[1]);
+            // university_.back()->setAddress(rowLine[2]);
+            // university_.back()->setIndex(std::stoi(rowLine[3]));
+            // university_.back()->setPesel(rowLine[4]);
+            // university_.back()->setGender(rowLine[5]);
              getline(Database, line, ',');
-             university_.back()->setName(line);
+             rowLine.push_back(line);
              getline(Database, line, ',');
-             university_.back()->setSurname(line);
+             rowLine.push_back(line);
              getline(Database, line, ',');
-             university_.back()->setAddress(line);
+             rowLine.push_back(line);
              getline(Database, line, ',');
-             university_.back()->setIndex(std::stoi(line));
+             rowLine.push_back(line);
              getline(Database, line, ',');
-             university_.back()->setPesel(line);
+             rowLine.push_back(line);
              getline(Database, line, '\n');
-             university_.back()->setGender(line);
+             rowLine.push_back(line);
+
+             addStudent(rowLine[0],rowLine[1],rowLine[2],std::stoi(rowLine[3]),rowLine[4],rowLine[5]);
+            
          }
          Database.close();
      } else

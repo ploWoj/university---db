@@ -9,6 +9,8 @@
 
 #include "Student.hpp"
 
+constexpr auto peselSize = 11u;
+
 class University {
     std::vector<std::unique_ptr<Student>> university_;
 

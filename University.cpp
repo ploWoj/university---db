@@ -40,21 +40,21 @@ void University::addStudent() {
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
     if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Student>(name, surname, address, indexNumber, pesel, gender));
-    }  //else {
-    //     std::cout << "There is such student in our database" << '\n';
-    // }
+    }  else {
+         std::cout << "There is such student in our database" << '\n';
+    }
 }
 
 Student* University::findBySurname(const std::string& surname) {
     auto isTheSame = [&surname](std::unique_ptr<Student>& student) { return student->getSurname() == surname; };
-    auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
 
-    if (result == university_.end()) {
-        //std::cout << "There is no such student in our database with given surname" << '\n';
+    if (it == university_.end()) {
+        
         return nullptr;
     }
 
-    Student* student_ptr = result->get();
+    Student* student_ptr = it->get();
 
     return student_ptr;
 }
@@ -62,14 +62,14 @@ Student* University::findBySurname(const std::string& surname) {
 Student* University::findByPesel(const std::string& pesel) {
     auto isTheSame = [&pesel](std::unique_ptr<Student>& student) { return student->getPesel() == pesel; };
 
-    auto result = std::find_if(university_.begin(), university_.end(), isTheSame);
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
 
-    if (result == university_.end()) {
-        //std::cout << "There is no such student in our database with given PESEL number" << '\n';
+    if (it == university_.end()) {
+        
         return nullptr;
     }
 
-    Student* student_ptr = result->get();
+    Student* student_ptr = it->get();
 
     return student_ptr;
 }
@@ -89,24 +89,33 @@ void University::sortBySurname() {
 }
 
 bool University::validationByPesel(const std::string& pesel) {
+    
+    if (pesel.size() != peselSize) {
+        return false;
+    }
+
     static constexpr std::array<int, 10> weightFactors{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
-    int result = 0;
+    
+    int checkSum = 0;
     int number = 0;
 
     for (size_t i = 0; i < weightFactors.size(); i++) {
+        if (!std::isdigit(pesel[i])) {
+            return false;
+        }
         number = pesel[i] - '0';
-        result += number * weightFactors[i];
+        checkSum += number * weightFactors[i];
     }
 
-    result = result % weightFactors.size();
+   checkSum = checkSum % weightFactors.size();
 
-    if (result != 0) {
-        result = weightFactors.size() - result;
+    if (checkSum != 0) {
+        checkSum = weightFactors.size() - checkSum;
     }
 
     int lastNumber = (pesel.back() - '0');
 
-    return result == lastNumber;
+    return checkSum == lastNumber;
 }
 
 void University::exportDatabase(std::string fileName) {
@@ -126,52 +135,37 @@ void University::exportDatabase(std::string fileName) {
         std::cout << "Unable to save file\n";
 }
 
-void University::importDatabase(std::string fileName) {
-    std::ifstream Database(fileName);
-    std::string line;
-    //--------------------------------------
-    std::vector<std::string> rowLine = {};
-    //--------------------------------------
-    if (Database.is_open()) {
-        size_t iLine = 0;
-        while (Database.peek() != EOF) {
-            getline(Database, line, ',');
-            //rowLine.push_back(line);
-            university_[iLine]->setName(line);
-            getline(Database, line, ',');
-            //rowLine.push_back(line);
-            university_[iLine]->setSurname(line);
-            getline(Database, line, ',');
-            //rowLine.push_back(line);
-            university_[iLine]->setAddress(line);
-            getline(Database, line, ',');
-            //rowLine.push_back(line);
-            university_[iLine]->setIndex(std::stoi(line));
-            getline(Database, line, ',');
-            //rowLine.push_back(line);
-            university_[iLine]->setPesel(line);
-            getline(Database, line, '\n');
-            //rowLine.push_back(line);
-            university_[iLine]->setGender(line);
 
-            // addStudent(rowLine.at(0),
-            //            rowLine.at(1),
-            //            rowLine.at(2),
-            //            std::stoi(rowLine.at(3)),
-            //            rowLine.at(4),
-            //            rowLine.at(5));
-
-            iLine += 1;
-        }
-        Database.close();
-    } else
-        std::cout << "Unable to open file\n";
-}
+ void University::importDatabase(std::string fileName) {
+     std::ifstream Database(fileName);
+     std::string line;
+     if (Database.is_open()) {
+         
+         while (Database.peek() != EOF) {
+             addStudent();
+             getline(Database, line, ',');
+             university_.back()->setName(line);
+             getline(Database, line, ',');
+             university_.back()->setSurname(line);
+             getline(Database, line, ',');
+             university_.back()->setAddress(line);
+             getline(Database, line, ',');
+             university_.back()->setIndex(std::stoi(line));
+             getline(Database, line, ',');
+             university_.back()->setPesel(line);
+             getline(Database, line, '\n');
+             university_.back()->setGender(line);
+         }
+         Database.close();
+     } else
+         std::cout << "Unable to open file";
+ }
 
 void University::deletedByIndexNumber(size_t IndexNumber) {
     for (int i = 0; i < university_.size(); ++i) {
         if (IndexNumber == university_[i]->getIndex()) {
             university_.erase(university_.begin() + i);
+            break;
         }
     }
 }

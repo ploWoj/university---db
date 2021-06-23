@@ -73,13 +73,7 @@ TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nMartyna, Tucholska, Wroclaw, 162780, 55030101230, woman\nAlex, Test, City, 666666, 56073561722, man\nRyszard, Arbuz, Gdynia, 165729, 85111507574, man\nWanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
 }
-TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
-    testing::internal::CaptureStdout();
-    testUni.sortByPesel();
-    testUni.displayBase();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ("0.Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\n1.Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n2.Alex, Test, City, 666666, 56073561722, man\n3.Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\n4.Wanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
-}
+
 TEST(UniversitySortBySurnameTest, ShouldVerifyUniversitySortBySurname) {
     testing::internal::CaptureStdout();
     testUniversityDB.sortBySurname();
@@ -116,4 +110,31 @@ TEST(UniversityFindByPeselTest, ShouldVerifyUniversityFindByPesel) {
     EXPECT_TRUE(testUniversityDB.findByPesel("88599287659") == nullptr);
     EXPECT_TRUE(testUniversityDB.findByPesel("55030121230") == nullptr);
     EXPECT_TRUE(testUniversityDB.findByPesel("56073961722") == nullptr);
+}
+
+TEST(UniversityDeleteByIndexNumber, ShouldVerifyUniversityDeleteByIndexNumber) {
+    testUniversityDB.deletedByIndexNumber(165729);
+    EXPECT_TRUE(testUniversityDB.findByPesel("85111507574") == nullptr);
+
+    testUniversityDB.deletedByIndexNumber(162589);
+    EXPECT_TRUE(testUniversityDB.findByPesel("45454545454") == nullptr);
+
+    testUniversityDB.deletedByIndexNumber(162576);
+    EXPECT_TRUE(testUniversityDB.findByPesel("88530287659") == nullptr);
+
+    testUniversityDB.deletedByIndexNumber(162780);
+    EXPECT_TRUE(testUniversityDB.findByPesel("55030101230") == nullptr);
+
+    testing::internal::CaptureStdout();
+    testUniversityDB.displayBase();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Alex, Test, City, 666666, 56073561722, man\n", output);
+}
+TEST(UniversityExportDatabaseTest, ShouldVerifyUniversityExportDatabase) {
+    testUniversityDB.exportDatabase("testUniversityDatabase.csv");
+    testing::internal::CaptureStdout();
+    testUniversityDB.importDatabase("testUniversityDatabase.csv");
+    testUniversityDB.displayBase();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ("Alex, Test, City, 666666, 56073561722, man\n", output);
 }

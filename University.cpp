@@ -2,7 +2,9 @@
 
 #include "Student.hpp"
 
-University::University() {}
+University::University() {
+    university_.reserve(10);
+}
 University::University(const Student& s) {
     university_.emplace_back(std::make_unique<Student>(s));
 }
@@ -143,13 +145,6 @@ void University::exportDatabase(std::string fileName) {
      if (Database.is_open()) {
          
          while (Database.peek() != EOF) {
-            // addStudent();
-            // university_.back()->setName(rowLine[0]);
-            // university_.back()->setSurname(rowLine[1]);
-            // university_.back()->setAddress(rowLine[2]);
-            // university_.back()->setIndex(std::stoi(rowLine[3]));
-            // university_.back()->setPesel(rowLine[4]);
-            // university_.back()->setGender(rowLine[5]);
              getline(Database, line, ',');
              rowLine.push_back(line);
              getline(Database, line, ',');

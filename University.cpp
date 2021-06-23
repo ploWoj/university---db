@@ -162,9 +162,8 @@ void University::exportDatabase(std::string fileName) {
              rowLine.push_back(line);
              getline(Database, line, '\n');
              rowLine.push_back(line);
-
              addStudent(rowLine[0],rowLine[1],rowLine[2],std::stoi(rowLine[3]),rowLine[4],rowLine[5]);
-            
+             rowLine.clear();
          }
          Database.close();
      } else

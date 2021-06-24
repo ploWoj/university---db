@@ -5,9 +5,11 @@
 University::University() {
     university_.reserve(10);
 }
+
 University::University(const Student& s) {
     university_.emplace_back(std::make_unique<Student>(s));
 }
+
 University::~University() {}
 
 void University::displayStudent(const Student* student) {
@@ -42,8 +44,8 @@ void University::addStudent() {
 void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
     if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Student>(name, surname, address, indexNumber, pesel, gender));
-    }  else {
-         std::cout << "There is such student in our database" << '\n';
+    } else {
+        std::cout << "There is such student in our database" << '\n';
     }
 }
 
@@ -52,7 +54,6 @@ Student* University::findBySurname(const std::string& surname) {
     auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
 
     if (it == university_.end()) {
-        
         return nullptr;
     }
 
@@ -67,7 +68,6 @@ Student* University::findByPesel(const std::string& pesel) {
     auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
 
     if (it == university_.end()) {
-        
         return nullptr;
     }
 
@@ -91,13 +91,12 @@ void University::sortBySurname() {
 }
 
 bool University::validationByPesel(const std::string& pesel) {
-    
     if (pesel.size() != peselSize) {
         return false;
     }
 
     static constexpr std::array<int, 10> weightFactors{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
-    
+
     int checkSum = 0;
     int number = 0;
 
@@ -109,7 +108,7 @@ bool University::validationByPesel(const std::string& pesel) {
         checkSum += number * weightFactors[i];
     }
 
-   checkSum = checkSum % weightFactors.size();
+    checkSum = checkSum % weightFactors.size();
 
     if (checkSum != 0) {
         checkSum = weightFactors.size() - checkSum;
@@ -137,33 +136,31 @@ void University::exportDatabase(std::string fileName) {
         std::cout << "Unable to save file\n";
 }
 
-
- void University::importDatabase(std::string fileName) {
-     std::ifstream Database(fileName);
-     std::string line;
-     std::vector<std::string> rowLine = {};
-     if (Database.is_open()) {
-         
-         while (Database.peek() != EOF) {
-             getline(Database, line, ',');
-             rowLine.push_back(line);
-             getline(Database, line, ',');
-             rowLine.push_back(line);
-             getline(Database, line, ',');
-             rowLine.push_back(line);
-             getline(Database, line, ',');
-             rowLine.push_back(line);
-             getline(Database, line, ',');
-             rowLine.push_back(line);
-             getline(Database, line, '\n');
-             rowLine.push_back(line);
-             addStudent(rowLine[0],rowLine[1],rowLine[2],std::stoi(rowLine[3]),rowLine[4],rowLine[5]);
-             rowLine.clear();
-         }
-         Database.close();
-     } else
-         std::cout << "Unable to open file";
- }
+void University::importDatabase(std::string fileName) {
+    std::ifstream Database(fileName);
+    std::string line;
+    std::vector<std::string> rowLine = {};
+    if (Database.is_open()) {
+        while (Database.peek() != EOF) {
+            getline(Database, line, ',');
+            rowLine.push_back(line);
+            getline(Database, line, ',');
+            rowLine.push_back(line);
+            getline(Database, line, ',');
+            rowLine.push_back(line);
+            getline(Database, line, ',');
+            rowLine.push_back(line);
+            getline(Database, line, ',');
+            rowLine.push_back(line);
+            getline(Database, line, '\n');
+            rowLine.push_back(line);
+            addStudent(rowLine[0], rowLine[1], rowLine[2], std::stoi(rowLine[3]), rowLine[4], rowLine[5]);
+            rowLine.clear();
+        }
+        Database.close();
+    } else
+        std::cout << "Unable to open file";
+}
 
 void University::deletedByIndexNumber(size_t IndexNumber) {
     for (int i = 0; i < university_.size(); ++i) {

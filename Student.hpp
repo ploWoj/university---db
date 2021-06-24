@@ -7,15 +7,15 @@
 #include <vector>
 
 class Student {
-   private:
+private:
     std::string name_;
     std::string surname_;
     std::string address_;
-    size_t indexNumber_ {0};
+    size_t indexNumber_{0};
     std::string pesel_;
     std::string gender_;
 
-   public:
+public:
     void setName(const std::string&);
     void setSurname(const std::string&);
     void setAddress(const std::string&);

@@ -14,7 +14,7 @@ constexpr auto peselSize = 11u;
 class University {
     std::vector<std::unique_ptr<Student>> university_;
 
-   public:
+public:
     University();
     University(const Student&);
     ~University();

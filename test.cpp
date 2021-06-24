@@ -73,7 +73,6 @@ TEST(UniversitySortByPeselTest, ShouldVerifyUniversitySortByPesel) {
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ("Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nMartyna, Tucholska, Wroclaw, 162780, 55030101230, woman\nAlex, Test, City, 666666, 56073561722, man\nRyszard, Arbuz, Gdynia, 165729, 85111507574, man\nWanda, Nowak, Lodz, 162576, 88530287659, woman\n", output);
 }
-
 TEST(UniversitySortBySurnameTest, ShouldVerifyUniversitySortBySurname) {
     testing::internal::CaptureStdout();
     testUniversityDB.sortBySurname();
@@ -98,7 +97,6 @@ TEST(UniversityFindBySurnameTest, ShouldVerifyUniversityFindBySurname) {
     EXPECT_TRUE(testUniversityDB.findBySurname("Black") == nullptr);
     EXPECT_TRUE(testUniversityDB.findBySurname("Ziobron") == nullptr);
 }
-
 TEST(UniversityFindByPeselTest, ShouldVerifyUniversityFindByPesel) {
     // Existing students in university database
     EXPECT_TRUE(testUniversityDB.findByPesel("85111507574") != nullptr);
@@ -111,7 +109,6 @@ TEST(UniversityFindByPeselTest, ShouldVerifyUniversityFindByPesel) {
     EXPECT_TRUE(testUniversityDB.findByPesel("55030121230") == nullptr);
     EXPECT_TRUE(testUniversityDB.findByPesel("56073961722") == nullptr);
 }
-
 TEST(UniversityDeleteByIndexNumber, ShouldVerifyUniversityDeleteByIndexNumber) {
     testUniversityDB.deletedByIndexNumber(165729);
     EXPECT_TRUE(testUniversityDB.findByPesel("85111507574") == nullptr);
@@ -131,8 +128,7 @@ TEST(UniversityDeleteByIndexNumber, ShouldVerifyUniversityDeleteByIndexNumber) {
     EXPECT_EQ("Alex, Test, City, 666666, 56073561722, man\n", output);
 }
 TEST(UniversityExportDatabaseTest, ShouldVerifyUniversityExportDatabase) {
- 
-    testUniversityDB.exportDatabase("testUniversityDatabase.csv");
+     testUniversityDB.exportDatabase("testUniversityDatabase.csv");
     //testUniversityDB.deletedByIndexNumber(666666);
     testing::internal::CaptureStdout();
     testUniversityDB.importDatabase("testUniversityDatabase.csv");

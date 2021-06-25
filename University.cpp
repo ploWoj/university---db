@@ -139,23 +139,16 @@ void University::exportDatabase(std::string fileName) {
 void University::importDatabase(std::string fileName) {
     std::ifstream Database(fileName);
     std::string line;
-    std::vector<std::string> rowLine = {};
+    std::array<std::string, 6> rowLine = {};
     if (Database.is_open()) {
         while (Database.peek() != EOF) {
-            getline(Database, line, ',');
-            rowLine.push_back(line);
-            getline(Database, line, ',');
-            rowLine.push_back(line);
-            getline(Database, line, ',');
-            rowLine.push_back(line);
-            getline(Database, line, ',');
-            rowLine.push_back(line);
-            getline(Database, line, ',');
-            rowLine.push_back(line);
+            for (size_t i = 0; i < rowLine.size()-1; i++) {
+                 getline(Database, line, ',');
+                 rowLine[i] = line;
+            }
             getline(Database, line, '\n');
-            rowLine.push_back(line);
+            rowLine[5] = line;
             addStudent(rowLine[0], rowLine[1], rowLine[2], std::stoi(rowLine[3]), rowLine[4], rowLine[5]);
-            rowLine.clear();
         }
         Database.close();
     } else

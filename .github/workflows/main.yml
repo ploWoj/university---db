@@ -3,7 +3,7 @@ name: University---db
 on: [push, pull_request]
 
 jobs:
-  grayscale-image:
+  university---db:
     runs-on: ubuntu-latest
     env:
       path: ./build

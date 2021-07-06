@@ -128,7 +128,7 @@ TEST(UniversityDeleteByIndexNumber, ShouldVerifyUniversityDeleteByIndexNumber) {
     EXPECT_EQ("Alex, Test, City, 666666, 56073561722, man\n", output);
 }
 TEST(UniversityExportDatabaseTest, ShouldVerifyUniversityExportDatabase) {
-     testUniversityDB.exportDatabase("testUniversityDatabase.csv");
+    testUniversityDB.exportDatabase("testUniversityDatabase.csv");
     //testUniversityDB.deletedByIndexNumber(666666);
     testing::internal::CaptureStdout();
     testUniversityDB.importDatabase("testUniversityDatabase.csv");

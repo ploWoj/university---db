@@ -97,7 +97,7 @@ bool University::validationByPesel(const std::string& pesel) {
 
     static constexpr std::array<int, 10> weightFactors{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
 
-    int checkSum = 0;
+    long unsigned int checkSum = 0;
     int number = 0;
 
     for (size_t i = 0; i < weightFactors.size(); i++) {
@@ -114,7 +114,7 @@ bool University::validationByPesel(const std::string& pesel) {
         checkSum = weightFactors.size() - checkSum;
     }
 
-    int lastNumber = (pesel.back() - '0');
+    long unsigned int lastNumber = (pesel.back() - '0');
 
     return checkSum == lastNumber;
 }
@@ -143,8 +143,8 @@ void University::importDatabase(std::string fileName) {
     if (Database.is_open()) {
         while (Database.peek() != EOF) {
             for (size_t i = 0; i < rowLine.size() - 1; i++) {
-                 getline(Database, element, ',');
-                 rowLine[i] = element;
+                getline(Database, element, ',');
+                rowLine[i] = element;
             }
             getline(Database, element, '\n');
             rowLine[5] = element;
@@ -156,7 +156,7 @@ void University::importDatabase(std::string fileName) {
 }
 
 void University::deletedByIndexNumber(size_t IndexNumber) {
-    for (int i = 0; i < university_.size(); ++i) {
+    for (int i = 0; i < static_cast<int>(university_.size()); ++i) {
         if (IndexNumber == university_[i]->getIndex()) {
             university_.erase(university_.begin() + i);
             break;

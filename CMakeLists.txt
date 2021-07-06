@@ -46,8 +46,8 @@ target_compile_options( ${PROJECT_NAME} PRIVATE ${FLAGS})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 
-add_executable(${PROJECT_NAME}-ut test.cpp)
-target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib)
+add_executable(${PROJECT_NAME}-ut test.cpp )
+target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib gtest_main)
 set_target_properties(${PROJECT_NAME}-ut PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 target_compile_options( ${PROJECT_NAME}-ut PRIVATE ${FLAGS})
 

@@ -1,7 +1,4 @@
-cmake_minimum_required(VERSION 2.8.2)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION 3.10)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -35,14 +32,24 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-project(university)
+project(university---db)
+
+set(SOURCE Student.cpp University.cpp)
+set(FLAGS -Wall -Wextra -Werror -Wpedantic -Wconversion -O3)
+
+add_library(${PROJECT_NAME}-lib STATIC ${SOURCE})
+target_compile_options( ${PROJECT_NAME}-lib PRIVATE ${FLAGS})
+set_target_properties(${PROJECT_NAME}-lib PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_compile_options( ${PROJECT_NAME} PRIVATE ${FLAGS})
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
+add_executable(${PROJECT_NAME}-ut ./test/greeter.ut.cpp)
+target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib)
+set_target_properties(${PROJECT_NAME}-ut PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_compile_options( ${PROJECT_NAME}-ut PRIVATE ${FLAGS})
+
 enable_testing()
-
-# Now simply link against gtest or gtest_main as needed. Eg
-set(files Student.cpp University.cpp)
-
-add_executable(${PROJECT_NAME} main.cpp ${files})
-add_executable(${PROJECT_NAME}-ut test.cpp ${files})
-
-target_link_libraries(${PROJECT_NAME}-ut gtest_main)
-add_test(NAME university_test COMMAND ${PROJECT_NAME}-ut)
+add_test(NAME unitTests COMMAND ./${PROJECT_NAME}-ut)

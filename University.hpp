@@ -22,7 +22,7 @@ public:
     void displayStudent(const Student*);
     void displayBase();
     void addStudent();
-    void addStudent(std::string, std::string, std::string, size_t, std::string, std::string);
+    void addStudent(std::string, std::string, std::string, std::string, std::string, size_t);
     Student* findBySurname(const std::string&);
     Student* findByPesel(const std::string&);
     void sortByPesel();

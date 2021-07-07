@@ -41,9 +41,9 @@ void University::addStudent() {
     university_.push_back(std::make_unique<Student>(newStudent));
 }
 
-void University::addStudent(std::string name, std::string surname, std::string address, size_t indexNumber, std::string pesel, std::string gender) {
+void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
     if (!findByPesel(pesel)) {
-        university_.emplace_back(std::make_unique<Student>(name, surname, address, indexNumber, pesel, gender));
+        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
     } else {
         std::cout << "There is such student in our database" << '\n';
     }
@@ -127,9 +127,9 @@ void University::exportDatabase(std::string fileName) {
             Database << itStudent->getName() << ","
                      << itStudent->getSurname() << ","
                      << itStudent->getAddress() << ","
-                     << itStudent->getIndex() << ","
                      << itStudent->getPesel() << ","
-                     << itStudent->getGender() << "\n";
+                     << itStudent->getGender() << ","
+                     << itStudent->getIndex() << "\n";
         }
         Database.close();
     } else
@@ -148,7 +148,7 @@ void University::importDatabase(std::string fileName) {
             }
             getline(Database, element, '\n');
             rowLine[5] = element;
-            addStudent(rowLine[0], rowLine[1], rowLine[2], std::stoi(rowLine[3]), rowLine[4], rowLine[5]);
+            addStudent(rowLine[0], rowLine[1], rowLine[2], rowLine[3], rowLine[4], std::stoi(rowLine[5]));
         }
         Database.close();
     } else

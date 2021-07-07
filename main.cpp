@@ -1,15 +1,17 @@
 #include "Student.hpp"
 #include "University.hpp"
+#include "Person.hpp"
+#include "Employee.hpp"
 
 int main() {
     // initiate database
     std::cout << "\nFilling in database...\n";
-    Student s1("Danuta", "Kot", "Warszawa", 166735, "89873561722", "man");
+    Student s1("Danuta", "Kot", "Warszawa", "89873561722", "man", 166735);
     University codersSchool(s1);
-    codersSchool.addStudent("Wojtek", "Kowalski", "Miedzychod", 162589, "45454545454", "man");
-    codersSchool.addStudent("Martyna", "Tucholska", "Wroclaw", 162780, "55030101230", "woman");
-    codersSchool.addStudent("Wanda", "Nowak", "Lodz", 162576, "88530287659", "woman");
-    codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", 165729, "85111507574", "man");
+    codersSchool.addStudent("Wojtek", "Kowalski", "Miedzychod", "45454545454", "man", 162589);
+    codersSchool.addStudent("Martyna", "Tucholska", "Wroclaw", "55030101230", "woman", 162780);
+    codersSchool.addStudent("Wanda", "Nowak", "Lodz", "88530287659", "woman", 162576);
+    codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", "85111507574", "man", 165729);
     std::cout << "\n=====================================\n";
     std::cout << "Datebase:\n";
     codersSchool.displayBase();

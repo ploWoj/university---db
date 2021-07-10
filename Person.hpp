@@ -6,12 +6,12 @@
 #include <vector>
 
 class Person {
-private:
-    std::string name_;
-    std::string surname_;
-    std::string address_;
-    std::string pesel_;
-    std::string gender_;
+protected:
+    std::string name_ = "";
+    std::string surname_ = "";
+    std::string address_ = "";
+    std::string pesel_ = "";
+    std::string gender_ = "";
 
 public:
     void setName(const std::string&);
@@ -26,7 +26,9 @@ public:
     std::string getPesel() const;
     std::string getGender() const;
 
+    virtual void display();
+
     Person() = default;
     Person(std::string name, std::string surname, std::string address, std::string pesel, std::string gender);
-    ~Person();
+    virtual ~Person() = default;
 };

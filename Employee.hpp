@@ -4,14 +4,16 @@
 
 class Employee : public Person {
 private: 
-    size_t salary_{0};
+    double salary_{0.0};
 
 public:
-    void setSalary(const size_t);
+    void setSalary(const double&);
  
-    size_t getSalary() const;
+    double getSalary() const;
+
+    void display() override;
  
     Employee() = default;
-    Employee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t salary);
-    ~Employee();
+    Employee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary);
+    ~Employee() override = default;
 };

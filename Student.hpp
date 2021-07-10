@@ -17,7 +17,9 @@ public:
 
     size_t getIndex() const;
 
+    void display() override;
+
     Student() = default;
     Student(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber);
-    ~Student();
+    ~Student() override = default;
 };

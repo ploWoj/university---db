@@ -1,62 +1,50 @@
-#include "Student.hpp"
-#include "University.hpp"
-#include "Person.hpp"
-#include "Employee.hpp"
-
+ #include "Student.hpp"
+ #include "University.hpp"
+ #include "Person.hpp"
+ #include "Employee.hpp"
+ 
 int main() {
     // initiate database
     std::cout << "\nFilling in database...\n";
     Student s1("Danuta", "Kot", "Warszawa", "89873561722", "man", 166735);
-    University codersSchool(s1);
+    University codersSchool;
     codersSchool.addStudent("Wojtek", "Kowalski", "Miedzychod", "45454545454", "man", 162589);
     codersSchool.addStudent("Martyna", "Tucholska", "Wroclaw", "55030101230", "woman", 162780);
     codersSchool.addStudent("Wanda", "Nowak", "Lodz", "88530287659", "woman", 162576);
     codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", "85111507574", "man", 165729);
+
+    codersSchool.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
     std::cout << "\n=====================================\n";
     std::cout << "Datebase:\n";
     codersSchool.displayBase();
-    codersSchool.sortByPesel();
     std::cout << "\n=====================================\n";
-    std::cout << "Datebase sorted by PESEL:\n";
+    std::cout << "Datebase sorted by pesel:\n";
+    codersSchool.sortByPesel();
     codersSchool.displayBase();
-    codersSchool.sortBySurname();
     std::cout << "\n=====================================\n";
     std::cout << "Datebase sorted by surname:\n";
+    codersSchool.sortBySurname();
     codersSchool.displayBase();
-
-    // search by PESEL
-    std::string pesel1 = "88111507706";
-    std::string pesel2 = "55030101230";
-    std::cout << "\nFinding student with PESEL no. " << pesel1 << "...\n";
-    codersSchool.displayStudent(codersSchool.findByPesel(pesel1));
-    auto student = codersSchool.findByPesel(pesel2);
-    if (codersSchool.validationByPesel(student->getPesel())) {
-        std::cout << "PESEL is correct\n";
-    } else {
-        std::cout << "PESEL is incorrect\n";
+    std::cout << "\n=====================================\n";
+    std::cout << "Remove student by index number\n";
+    size_t index_test = 162780;
+    codersSchool.removeByIndexNumber(index_test);
+    codersSchool.displayBase();
+    std::cout << "\n=====================================\n";
+    std::cout << "Pesel validation\n";
+    auto& personVec = codersSchool.getVector();
+    for (const auto& el : personVec) {
+        auto pesel = el->getPesel();
+        if (codersSchool.validationByPesel(pesel)){
+            std::cout << pesel << " is valid\n";
+        } else {
+            std::cout << pesel << " is invalid\n";
+        }
     }
-
-    // delete by index number
-    std::cout << "\nDeleting student with index no. 162780...\n";
-    size_t indexNumber = 162780;
-    codersSchool.deletedByIndexNumber(indexNumber);
     std::cout << "\n=====================================\n";
-    std::cout << "Database:\n";
-    codersSchool.displayBase();
-
-    // export database
-    std::cout << "\nExporting database to CSV file...\n";
-    std::string fileNameExport = "test.csv";
-    codersSchool.exportDatabase(fileNameExport);
-
-    // import database
-    std::cout << "\nImporting database from CSV file...\n";
-    std::string fileNameImport = "test.csv";
-    University importedDatabase;
-    importedDatabase.importDatabase(fileNameImport);
-    std::cout << "\n=====================================\n";
-    std::cout << "Imported database:\n";
-    importedDatabase.displayBase();
-
+    std::cout << "Export database\n";
+    std::string fileName = "university.csv";
+    codersSchool.exportDatabase(fileName);
     return 0;
+
 }

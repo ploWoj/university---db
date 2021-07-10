@@ -39,7 +39,7 @@ project(university)
 enable_testing()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-set(files Student.cpp University.cpp)
+set(files Student.cpp University.cpp Person.cpp Employee.cpp)
 
 add_executable(${PROJECT_NAME} main.cpp ${files})
 add_executable(${PROJECT_NAME}-ut test.cpp ${files})

@@ -2,18 +2,19 @@
 
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
 
 class Person {
-protected:
+   protected:
     std::string name_ = "";
     std::string surname_ = "";
     std::string address_ = "";
     std::string pesel_ = "";
     std::string gender_ = "";
 
-public:
+   public:
     void setName(const std::string&);
     void setSurname(const std::string&);
     void setAddress(const std::string&);
@@ -26,7 +27,7 @@ public:
     std::string getPesel() const;
     std::string getGender() const;
 
-    virtual void display();
+    virtual void display() = 0;
 
     Person() = default;
     Person(std::string name, std::string surname, std::string address, std::string pesel, std::string gender);

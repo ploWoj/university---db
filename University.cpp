@@ -1,19 +1,20 @@
-#include <algorithm>
 #include "University.hpp"
-#include "Student.hpp"
-#include "Person.hpp"
 
+#include <algorithm>
+
+#include "Person.hpp"
+#include "Student.hpp"
 University::University() {
     university_.reserve(10);
 }
 
-const std::vector<std::unique_ptr<Person>>& University::getVector() const { 
-    return university_; 
+const std::vector<std::unique_ptr<Person>>& University::getVector() const {
+    return university_;
 }
 
 void University::displayBase() {
     for (const auto& person : university_) {
-            person->display();
+        person->display();
     }
 }
 
@@ -24,23 +25,35 @@ void University::addStudent() {
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    Student student(name, surname, address, pesel, gender,indexNumber);
+    Student student(name, surname, address, pesel, gender, indexNumber);
     auto studentUP = std::make_unique<Student>(student);
-    university_.push_back(std::move(studentUP));
+    university_.emplace_back(std::move(studentUP));
 }
 
- void University::addEmployee() {
-     Employee newEmployee;
-     auto newEmployeeUP = std::make_unique<Employee>(newEmployee);
-     university_.push_back(std::move(newEmployeeUP));
- }
- 
-void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
-     Employee employee(name, surname, address, pesel, gender, salary);
-     auto employeeUP = std::make_unique<Employee>(employee);
-     university_.push_back(std::move(employeeUP));
+void University::addEmployee() {
+    Employee newEmployee;
+    auto newEmployeeUP = std::make_unique<Employee>(newEmployee);
+    university_.push_back(std::move(newEmployeeUP));
 }
 
+void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary) {
+    Employee employee(name, surname, address, pesel, gender, salary);
+    auto employeeUP = std::make_unique<Employee>(employee);
+    university_.emplace_back(std::move(employeeUP));
+}
+void University::modifySalary(double newSalary, const std::string& pesel) {
+    auto it = std::find_if(begin(university_), end(university_), [pesel](auto const& person) {
+        return person->getPesel() == pesel;
+    });
+    if (it != end(university_)) {
+        std::unique_ptr<Person*> p = std::make_unique<Person*>(std::move(it->get()));
+        if (Employee* e = dynamic_cast<Employee*>(*p)) {
+            e->setSalary(newSalary);
+        } else {
+            std::cout << "ERROR: Students don't have salary\n";
+        }
+    }
+}
 void University::sortByPesel() {
     std::sort(university_.begin(), university_.end(),
               [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
@@ -54,15 +67,14 @@ void University::sortBySurname() {
                   return lhsPtr->getSurname() < rhsPtr->getSurname();
               });
 }
-//I think that erase-remove idiom will be more compressed version 
+
 void University::removeByIndexNumber(size_t indexNumber) {
     size_t i = 0;
     for (const auto& el : university_) {
-        if (Student* s; s = dynamic_cast<Student*>(el.get())) {
+        if (auto s = dynamic_cast<Student*>(el.get())) {
             if (s->getIndex() == indexNumber) {
-               university_.erase(university_.begin() + i);
-               break;
-
+                university_.erase(university_.begin() + i);
+                break;
             }
         }
         i++;
@@ -108,9 +120,9 @@ void University::exportDatabase(const std::string& fileName) {
                      << itPerson->getAddress() << ","
                      << itPerson->getPesel() << ","
                      << itPerson->getGender() << ",";
-            if (Student* itStudent; itStudent = dynamic_cast<Student*>(itPerson.get())) {
+            if (auto itStudent = dynamic_cast<Student*>(itPerson.get())) {
                 Database << itStudent->getIndex() << '\n';
-            } else if (Employee* itEmployee; itEmployee = dynamic_cast<Employee*>(itPerson.get())) {
+            } else if (auto itEmployee = dynamic_cast<Employee*>(itPerson.get())) {
                 Database << itEmployee->getSalary() << '\n';
             }
         }
@@ -138,4 +150,3 @@ void University::importDatabase(const std::string& fileName) {
         std::cout << "Unable to open file";
 }
 */
-

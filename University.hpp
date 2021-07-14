@@ -7,15 +7,15 @@
 #include <string>
 #include <vector>
 
-#include "Student.hpp"
 #include "Employee.hpp"
+#include "Student.hpp"
 
 constexpr auto peselSize = 11u;
 
 class University {
     std::vector<std::unique_ptr<Person>> university_ = {};
 
-public:
+   public:
     University();
     ~University() = default;
 
@@ -31,7 +31,7 @@ public:
     void sortBySurname();
     bool validationByPesel(const std::string&);
     void exportDatabase(const std::string&);
-   // void importDatabase(const std::string&);
+    // void importDatabase(const std::string&);
     void removeByIndexNumber(size_t);
-    
+    void modifySalary(double, const std::string&);
 };

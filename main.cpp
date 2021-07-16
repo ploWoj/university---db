@@ -45,6 +45,19 @@ int main() {
     std::cout << "Export database\n";
     std::string fileName = "university.csv";
     codersSchool.exportDatabase(fileName);
+    
+    std::cout << "\n=====================================\n";
+    std::cout << "Import database to codersSchool\n";
+    codersSchool.importDatabase(fileName);
+    codersSchool.displayBase();
+
+
+    std::cout << "\n=====================================\n";
+    std::cout << "Import database to newSchool\n";
+    University newSchool;
+    newSchool.importDatabase(fileName);
+    newSchool.displayBase();
+    
     return 0;
 
 }

@@ -31,7 +31,7 @@ public:
     void sortBySurname();
     bool validationByPesel(const std::string&);
     void exportDatabase(const std::string&);
-   // void importDatabase(const std::string&);
+    void importDatabase(const std::string&);
     void removeByIndexNumber(size_t);
     
 };

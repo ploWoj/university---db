@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <typeinfo>
 #include "University.hpp"
 #include "Student.hpp"
 #include "Person.hpp"
@@ -21,24 +22,19 @@ void University::addStudent() {
     Student newStudent;
     auto newStudentUP = std::make_unique<Student>(newStudent);
     university_.push_back(std::move(newStudentUP));
+ //   university_.emplace_back(std:make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    Student student(name, surname, address, pesel, gender,indexNumber);
-    auto studentUP = std::make_unique<Student>(student);
-    university_.push_back(std::move(studentUP));
+    university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
 }
 
  void University::addEmployee() {
-     Employee newEmployee;
-     auto newEmployeeUP = std::make_unique<Employee>(newEmployee);
-     university_.push_back(std::move(newEmployeeUP));
+     university_.emplace_back(std::make_unique<Employee>());
  }
  
 void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
-     Employee employee(name, surname, address, pesel, gender, salary);
-     auto employeeUP = std::make_unique<Employee>(employee);
-     university_.push_back(std::move(employeeUP));
+     university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
 }
 
 void University::sortByPesel() {
@@ -58,7 +54,7 @@ void University::sortBySurname() {
 void University::removeByIndexNumber(size_t indexNumber) {
     size_t i = 0;
     for (const auto& el : university_) {
-        if (Student* s; s = dynamic_cast<Student*>(el.get())) {
+        if (auto s = dynamic_cast<Student*>(el.get())) {
             if (s->getIndex() == indexNumber) {
                university_.erase(university_.begin() + i);
                break;
@@ -103,7 +99,8 @@ void University::exportDatabase(const std::string& fileName) {
     Database.open(fileName);
     if (Database.is_open()) {
         for (auto& itPerson : university_) {
-            Database << itPerson->getName() << ","
+            Database << typeid(*itPerson).name() << "," 
+                     << itPerson->getName() << ","
                      << itPerson->getSurname() << ","
                      << itPerson->getAddress() << ","
                      << itPerson->getPesel() << ","
@@ -118,11 +115,11 @@ void University::exportDatabase(const std::string& fileName) {
     } else
         std::cout << "Unable to save file\n";
 }
-/*
+
 void University::importDatabase(const std::string& fileName) {
     std::ifstream Database(fileName);
     std::string element;
-    std::array<std::string, 6> rowLine = {};
+    std::array<std::string, 7> rowLine = {};
     if (Database.is_open()) {
         while (Database.peek() != EOF) {
             for (size_t i = 0; i < rowLine.size() - 1; i++) {
@@ -130,12 +127,17 @@ void University::importDatabase(const std::string& fileName) {
                  rowLine[i] = element;
             }
             getline(Database, element, '\n');
-            rowLine[5] = element;
-            addStudent(rowLine[0], rowLine[1], rowLine[2], rowLine[3], rowLine[4], std::stoi(rowLine[5]));
+            rowLine[6] = element;
+            if (rowLine[0] == "7Student") {
+                addStudent(rowLine[1], rowLine[2], rowLine[3], rowLine[4], rowLine[5], std::stoi(rowLine[6]));
+            }
+            if (rowLine[0] == "8Employee") {
+                addEmployee(rowLine[1], rowLine[2], rowLine[3], rowLine[4], rowLine[5], std::stod(rowLine[6]));
+            }
         }
         Database.close();
     } else
         std::cout << "Unable to open file";
 }
-*/
+
 

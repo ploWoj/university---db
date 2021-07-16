@@ -20,22 +20,50 @@ void University::displayBase() {
 }
 
 void University::addStudent() {
-    Student newStudent;
-    auto newStudentUP = std::make_unique<Student>(newStudent);
-    university_.push_back(std::move(newStudentUP));
- //   university_.emplace_back(std:make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+    university_.emplace_back(std::make_unique<Student>());
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+    if (!findByPesel(pesel)){
+        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+    }
 }
 
- void University::addEmployee() {
+void University::addEmployee() {
      university_.emplace_back(std::make_unique<Employee>());
  }
  
 void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
-     university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
+    if (!findByPesel(pesel)){
+        university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
+    }
+}
+
+Person* University::findBySurname(const std::string& surname) {
+    auto isTheSame = [&surname](std::unique_ptr<Person>& person) { return person->getSurname() == surname; };
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
+
+    if (it == university_.end()) {
+        return nullptr;
+    }
+
+    Person* person_ptr = it->get();
+
+    return person_ptr;
+}
+
+Person* University::findByPesel(const std::string& pesel) {
+    auto isTheSame = [&pesel](std::unique_ptr<Person>& person) { return person->getPesel() == pesel; };
+
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
+
+    if (it == university_.end()) {
+        return nullptr;
+    }
+
+    Person* person_ptr = it->get();
+
+    return person_ptr;
 }
 
 void University::modifySalary(double newSalary, const std::string& pesel) {

@@ -58,11 +58,25 @@ int main() {
     newSchool.importDatabase(fileName);
     newSchool.displayBase();
     
+    std::cout << "\n=====================================\n";
     std::cout << "Modify salary\n";
     codersSchool.modifySalary(66666.66, "85111502341");
     codersSchool.modifySalary(66666.66, "88530287659");
     codersSchool.displayBase();
+    
     std::cout << "\n=====================================\n";
+    std::cout << "Find by PESEL\n";
+    std::string pesel1 = "88530287659";
+    if (auto* person = codersSchool.findByPesel(pesel1)) {
+        person->display();
+    }
+
+    std::cout << "\n=====================================\n";
+    std::cout << "Find by Surname\n";
+    std::string surname1 = "Arbuz";
+    if (auto* person = codersSchool.findBySurname(surname1)) {
+        person->display();
+    }
 
     return 0;
 }

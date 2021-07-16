@@ -1,8 +1,8 @@
- #include "Student.hpp"
- #include "University.hpp"
- #include "Person.hpp"
- #include "Employee.hpp"
- 
+#include "Employee.hpp"
+#include "Person.hpp"
+#include "Student.hpp"
+#include "University.hpp"
+
 int main() {
     // initiate database
     std::cout << "\nFilling in database...\n";
@@ -35,7 +35,7 @@ int main() {
     auto& personVec = codersSchool.getVector();
     for (const auto& el : personVec) {
         auto pesel = el->getPesel();
-        if (codersSchool.validationByPesel(pesel)){
+        if (codersSchool.validationByPesel(pesel)) {
             std::cout << pesel << " is valid\n";
         } else {
             std::cout << pesel << " is invalid\n";
@@ -58,6 +58,11 @@ int main() {
     newSchool.importDatabase(fileName);
     newSchool.displayBase();
     
-    return 0;
+    std::cout << "Modify salary\n";
+    codersSchool.modifySalary(66666.66, "85111502341");
+    codersSchool.modifySalary(66666.66, "88530287659");
+    codersSchool.displayBase();
+    std::cout << "\n=====================================\n";
 
+    return 0;
 }

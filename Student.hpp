@@ -17,6 +17,8 @@ public:
 
     size_t getIndex() const;
 
+    // Functions ovverride from class Person
+    double getSalary() const override { return  0.0; }
     void display() override;
 
     Student() = default;

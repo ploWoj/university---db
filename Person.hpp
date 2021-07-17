@@ -26,7 +26,7 @@ class Person {
     std::string getAddress() const;
     std::string getPesel() const;
     std::string getGender() const;
-
+    virtual double getSalary() const = 0;
     virtual void display() = 0;
 
     Person() = default;

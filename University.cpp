@@ -67,6 +67,13 @@ void University::sortBySurname() {
                   return lhsPtr->getSurname() < rhsPtr->getSurname();
               });
 }
+// Fucntion sort People included in university_.
+void University::sortBySalary() {
+    std::sort(university_.begin(), university_.end(),
+              [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
+                  return lhsPtr->getSalary() > rhsPtr->getSalary() || (lhsPtr->getSalary() == rhsPtr->getSalary() && lhsPtr->getSurname() < rhsPtr->getSurname());
+              });
+}
 
 void University::removeByIndexNumber(size_t indexNumber) {
     size_t i = 0;

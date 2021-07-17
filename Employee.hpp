@@ -9,8 +9,9 @@ private:
 public:
     void setSalary(const double&);
  
-    double getSalary() const;
-
+    
+    // Functions ovverride from class Person
+    double getSalary() const override;
     void display() override;
  
     Employee() = default;

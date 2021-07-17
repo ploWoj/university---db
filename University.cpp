@@ -67,7 +67,8 @@ void University::sortBySurname() {
                   return lhsPtr->getSurname() < rhsPtr->getSurname();
               });
 }
-// Fucntion sort People included in university_.
+//Function is sorting people included in university_ vector. Sorting by salary then by surname. 
+
 void University::sortBySalary() {
     std::sort(university_.begin(), university_.end(),
               [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {

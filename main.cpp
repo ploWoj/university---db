@@ -14,6 +14,10 @@ int main() {
     codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", "85111507574", "man", 165729);
 
     codersSchool.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
+    codersSchool.addEmployee("Tomek", "Niedzielski", "Kazimierz", "86120607584", "man", 10268.86);
+    codersSchool.addEmployee("Arek", "Wojarz", "Torun", "72121608984", "man", 1200.86);
+    codersSchool.addEmployee("Maria", "Konieczna", "Rzeszów", "99101908934", "woman", 8190.86);
+    codersSchool.addEmployee("Maria", "Bida", "Rzeszów", "99101908934", "woman", 66666.7);
     std::cout << "\n=====================================\n";
     std::cout << "Datebase:\n";
     codersSchool.displayBase();
@@ -45,6 +49,12 @@ int main() {
     std::cout << "Modify salary\n";
     codersSchool.modifySalary(66666.66, "85111502341");
     codersSchool.modifySalary(66666.66, "88530287659");
+    codersSchool.displayBase();
+    std::cout << "\n=====================================\n";
+
+    std::cout << "\n=====================================\n";
+    std::cout << "Datebase sorted by salary:\n";
+    codersSchool.sortBySalary();
     codersSchool.displayBase();
     std::cout << "\n=====================================\n";
 

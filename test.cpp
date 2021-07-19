@@ -184,7 +184,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -200,7 +200,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -218,7 +218,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.displayBase();
 
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -236,7 +236,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.displayBase();
 
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -258,7 +258,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.modifySalary(newSalary, "85111502341");
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }

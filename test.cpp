@@ -184,7 +184,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -200,7 +200,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -218,7 +218,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.displayBase();
 
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
@@ -236,10 +236,31 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.displayBase();
 
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }
+        AND_GIVEN("create expected value  Employee: Tomek, Niedzielsk, Kazimierz, 86120607584, man, 10268.8\nStudent: Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\nEmployee: Adam, Borsuk, Grudziadz, 85111502341, man, 4250.66\nStudent: Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nStudent: Wanda, Nowak, Lodz, 162576, 88530287659, woman\nStudent: Alex, Test, City, 666666, 56073561722, man\nStudent: Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n") {
+            std::string expected =
+                "Employee: Tomek, Niedzielski, Kazimierz, 86120607584, man, 10268.8\nEmployee: Adam, Borsuk, Grudziadz, 85111502341, man, 4250.66\nStudent: Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\nStudent: Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nStudent: Wanda, Nowak, Lodz, 162576, 88530287659, woman\nStudent: Alex, Test, City, 666666, 56073561722, man\nStudent: Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n";
+            WHEN("University should add students with employee and display output Employee: Tomek, Niedzielski, Kazimierz, 86120607584, man, 10268.8\nEmployee: Adam, Borsuk, Grudziadz, 85111502341, man, 4250.66\nStudent: Ryszard, Arbuz, Gdynia, 165729, 85111507574, man\nStudent: Wojtek, Kowalski, Miedzychod, 162589, 45454545454, man\nStudent: Wanda, Nowak, Lodz, 162576, 88530287659, woman\nStudent: Alex, Test, City, 666666, 56073561722, man\nStudent: Martyna, Tucholska, Wroclaw, 162780, 55030101230, woman\n, man by displayBase()") {
+                std::stringstream buffer;
+                std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
+                testUniversity.addStudent("Wojtek", "Kowalski", "Miedzychod", "45454545454", "man", 162589);
+                testUniversity.addStudent("Martyna", "Tucholska", "Wroclaw", "55030101230", "woman", 162780);
+                testUniversity.addStudent("Wanda", "Nowak", "Lodz", "88530287659", "woman", 162576);
+                testUniversity.addStudent("Ryszard", "Arbuz", "Gdynia", "85111507574", "man", 165729);
+                testUniversity.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
+                testUniversity.addEmployee("Tomek", "Niedzielski", "Kazimierz", "86120607584", "man", 10268.8);
+                testUniversity.sortBySalary();
+                testUniversity.displayBase();
+
+                std::string result = buffer.str();
+                std::cout.rdbuf(prevcoutbuf);
+                REQUIRE(result == expected);
+            }
+        }
+
         AND_GIVEN("create two pesel 55030101230 - valid, 89873561722 - not valid") {
             std::string valid = "55030101230";
             std::string notValid = "89873561722";
@@ -258,7 +279,7 @@ SCENARIO("Class University should show working methods", "[university]") {
                 testUniversity.modifySalary(newSalary, "85111502341");
                 testUniversity.displayBase();
                 std::string result = buffer.str();
-                (void)prevcoutbuf;
+                std::cout.rdbuf(prevcoutbuf);
                 REQUIRE(result == expected);
             }
         }

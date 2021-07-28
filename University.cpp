@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <typeinfo>
+#include <optional>
 
 #include "University.hpp"
 #include "Person.hpp"
@@ -89,6 +90,20 @@ void University::sortBySurname() {
     std::sort(university_.begin(), university_.end(),
               [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
                   return lhsPtr->getSurname() < rhsPtr->getSurname();
+              });
+}
+
+std::optional<double> getSalaryIfIs(const std::unique_ptr<Person>& person) {
+        if (auto* employee = dynamic_cast<Employee*>(person.get())) {
+                return employee->getSalary();
+        }
+        return std::nullopt;
+}
+//Function is sorting people included in university_ vector. Sorting by salary then by surname. 
+void University::sortBySalary() {
+    std::sort(university_.begin(), university_.end(),
+              [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
+                  return getSalaryIfIs(lhsPtr).value_or(0.0) > getSalaryIfIs(rhsPtr).value_or(0.0) || (getSalaryIfIs(lhsPtr).value_or(0.0) == getSalaryIfIs(rhsPtr).value_or(0.0) && lhsPtr->getSurname() < rhsPtr->getSurname());
               });
 }
 

@@ -12,8 +12,16 @@ int main() {
     codersSchool.addStudent("Martyna", "Tucholska", "Wroclaw", "55030101230", "woman", 162780);
     codersSchool.addStudent("Wanda", "Nowak", "Lodz", "88530287659", "woman", 162576);
     codersSchool.addStudent("Ryszard", "Arbuz", "Gdynia", "85111507574", "man", 165729);
+    codersSchool.addStudent("Marianna", "Bak", "Zlotoryja", "45454534532", "woman", 162421);
+    codersSchool.addStudent("Krzysztof", "Cebula", "Wroclaw", "32145101230", "man", 163270);
+    codersSchool.addStudent("Florian", "Fiolkowski", "Warszawa", "87698287659", "man", 162759);
+    codersSchool.addStudent("Lidia", "Romska", "Gdansk", "85111594286", "woman", 163782);
 
     codersSchool.addEmployee("Adam", "Borsuk", "Grudziadz", "85111502341", "man", 4250.66);
+    codersSchool.addEmployee("Tomek", "Niedzielski", "Kazimierz", "86120607584", "man", 10268.86);
+    codersSchool.addEmployee("Arek", "Wojarz", "Torun", "72121608984", "man", 1200.86);
+    codersSchool.addEmployee("Maria", "Konieczna", "Rzeszów", "99101908934", "woman", 8190.86);
+    codersSchool.addEmployee("Maria", "Bida", "Rzeszów", "99101908934", "woman", 66666.7);
     std::cout << "\n=====================================\n";
     std::cout << "Datebase:\n";
     codersSchool.displayBase();
@@ -78,5 +86,14 @@ int main() {
         person->display();
     }
 
+    std::cout << "\n=====================================\n";
+    std::cout << "Datebase sorted by salary:\n";
+    codersSchool.sortBySalary();
+    codersSchool.displayBase();
+    std::cout << "\n=====================================\n";
+
+    // std::cout << "Export database\n";
+    // std::string fileName = "university.csv";
+    // codersSchool.exportDatabase(fileName);
     return 0;
 }

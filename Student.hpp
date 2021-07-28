@@ -17,6 +17,7 @@ public:
 
     size_t getIndex() const;
 
+    // Functions ovverride from class Person
     void display() override;
 
     Student() = default;

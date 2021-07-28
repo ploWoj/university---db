@@ -29,6 +29,8 @@ class University {
     Person* findByPesel(const std::string&);
     void sortByPesel();
     void sortBySurname();
+    
+    void sortBySalary();
     bool validationByPesel(const std::string&);
     void exportDatabase(const std::string&);
     void importDatabase(const std::string&);

@@ -1,9 +1,11 @@
-#include "University.hpp"
-
 #include <algorithm>
+#include <typeinfo>
+#include <optional>
 
+#include "University.hpp"
 #include "Person.hpp"
 #include "Student.hpp"
+
 University::University() {
     university_.reserve(10);
 }
@@ -19,35 +21,58 @@ void University::displayBase() {
 }
 
 void University::addStudent() {
-    Student newStudent;
-    auto newStudentUP = std::make_unique<Student>(newStudent);
-    university_.push_back(std::move(newStudentUP));
+    university_.emplace_back(std::make_unique<Student>());
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    Student student(name, surname, address, pesel, gender, indexNumber);
-    auto studentUP = std::make_unique<Student>(student);
-    university_.emplace_back(std::move(studentUP));
+    if (!findByPesel(pesel)){
+        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+    }
 }
 
 void University::addEmployee() {
-    Employee newEmployee;
-    auto newEmployeeUP = std::make_unique<Employee>(newEmployee);
-    university_.push_back(std::move(newEmployeeUP));
+     university_.emplace_back(std::make_unique<Employee>());
+ }
+ 
+void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
+    if (!findByPesel(pesel)){
+        university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
+    }
 }
 
-void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary) {
-    Employee employee(name, surname, address, pesel, gender, salary);
-    auto employeeUP = std::make_unique<Employee>(employee);
-    university_.emplace_back(std::move(employeeUP));
+Person* University::findBySurname(const std::string& surname) {
+    auto isTheSame = [&surname](std::unique_ptr<Person>& person) { return person->getSurname() == surname; };
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
+
+    if (it == university_.end()) {
+        return nullptr;
+    }
+
+    Person* person_ptr = it->get();
+
+    return person_ptr;
 }
+
+Person* University::findByPesel(const std::string& pesel) {
+    auto isTheSame = [&pesel](std::unique_ptr<Person>& person) { return person->getPesel() == pesel; };
+
+    auto it = std::find_if(university_.begin(), university_.end(), isTheSame);
+
+    if (it == university_.end()) {
+        return nullptr;
+    }
+
+    Person* person_ptr = it->get();
+
+    return person_ptr;
+}
+
 void University::modifySalary(double newSalary, const std::string& pesel) {
     auto it = std::find_if(begin(university_), end(university_), [pesel](auto const& person) {
         return person->getPesel() == pesel;
     });
     if (it != end(university_)) {
-        std::unique_ptr<Person*> p = std::make_unique<Person*>(std::move(it->get()));
-        if (Employee* e = dynamic_cast<Employee*>(*p)) {
+        if (Employee* e = dynamic_cast<Employee*>(it->get())) {
             e->setSalary(newSalary);
         } else {
             std::cout << "ERROR: Students don't have salary\n";
@@ -65,6 +90,20 @@ void University::sortBySurname() {
     std::sort(university_.begin(), university_.end(),
               [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
                   return lhsPtr->getSurname() < rhsPtr->getSurname();
+              });
+}
+
+std::optional<double> getSalaryIfIs(const std::unique_ptr<Person>& person) {
+        if (auto* employee = dynamic_cast<Employee*>(person.get())) {
+                return employee->getSalary();
+        }
+        return std::nullopt;
+}
+//Function is sorting people included in university_ vector. Sorting by salary then by surname. 
+void University::sortBySalary() {
+    std::sort(university_.begin(), university_.end(),
+              [](const std::unique_ptr<Person>& lhsPtr, const std::unique_ptr<Person>& rhsPtr) {
+                  return getSalaryIfIs(lhsPtr).value_or(0.0) > getSalaryIfIs(rhsPtr).value_or(0.0) || (getSalaryIfIs(lhsPtr).value_or(0.0) == getSalaryIfIs(rhsPtr).value_or(0.0) && lhsPtr->getSurname() < rhsPtr->getSurname());
               });
 }
 
@@ -115,7 +154,8 @@ void University::exportDatabase(const std::string& fileName) {
     Database.open(fileName);
     if (Database.is_open()) {
         for (auto& itPerson : university_) {
-            Database << itPerson->getName() << ","
+            Database << typeid(*itPerson).name() << "," 
+                     << itPerson->getName() << ","
                      << itPerson->getSurname() << ","
                      << itPerson->getAddress() << ","
                      << itPerson->getPesel() << ","
@@ -130,11 +170,11 @@ void University::exportDatabase(const std::string& fileName) {
     } else
         std::cout << "Unable to save file\n";
 }
-/*
+
 void University::importDatabase(const std::string& fileName) {
     std::ifstream Database(fileName);
     std::string element;
-    std::array<std::string, 6> rowLine = {};
+    std::array<std::string, 7> rowLine = {};
     if (Database.is_open()) {
         while (Database.peek() != EOF) {
             for (size_t i = 0; i < rowLine.size() - 1; i++) {
@@ -142,11 +182,15 @@ void University::importDatabase(const std::string& fileName) {
                  rowLine[i] = element;
             }
             getline(Database, element, '\n');
-            rowLine[5] = element;
-            addStudent(rowLine[0], rowLine[1], rowLine[2], rowLine[3], rowLine[4], std::stoi(rowLine[5]));
+            rowLine[6] = element;
+            if (rowLine[0] == "7Student") {
+                addStudent(rowLine[1], rowLine[2], rowLine[3], rowLine[4], rowLine[5], std::stoi(rowLine[6]));
+            }
+            if (rowLine[0] == "8Employee") {
+                addEmployee(rowLine[1], rowLine[2], rowLine[3], rowLine[4], rowLine[5], std::stod(rowLine[6]));
+            }
         }
         Database.close();
     } else
         std::cout << "Unable to open file";
 }
-*/

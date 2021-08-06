@@ -1,13 +1,27 @@
 #include <algorithm>
 #include <typeinfo>
 #include <optional>
+#include <string>
 
 #include "University.hpp"
 #include "Person.hpp"
 #include "Student.hpp"
+#include "RandomNumberGenerator.hpp"
+
+using RNG = RandomNumberGenerator;
+
+std::string firstNamesMale[] = {"Piotr", "Krzysztof", "Andrzej", "Tomasz", "Pawel", "Jan", "Michal", "Marcin", "Jakub", "Adam"};
+std::string lastNamesMale[] = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Kowalczyk", "Kamiski", "Lewandowski", "Zielinski", "Szymanski", "Wozniak"};
+std::string firstNamesFemale[] = {"Anna", "Maria", "Katarzyna", "Malgorzata", "Agnieszka", "Barbara", "Ewa", "Krystyna", "Magdalena", "Elzbieta"};
+std::string lastNamesFemale[] = {"Nowak", "Kowalska", "Wisniewska", "Wojcik", "Kowalczyk", "Kaminska", "Lewandowska", "Zielinska", "Szymanska", "Dabrowska"};
+std::string addresses[] = {"Warszawa", "Krakow", "Lodz", "Wroclaw", "Poznan", "Gdansk", "Szczecin", "Bydgoszcz"};
 
 University::University() {
-    university_.reserve(10);
+    university_.reserve(defaultUniversitySize);
+}
+
+University::University(size_t size) {
+    university_.reserve(size);
 }
 
 const std::vector<std::unique_ptr<Person>>& University::getVector() const {
@@ -25,17 +39,17 @@ void University::addStudent() {
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    if (!findByPesel(pesel)){
-        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+    if (!findByPesel(pesel)) {
+        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
     }
 }
 
 void University::addEmployee() {
-     university_.emplace_back(std::make_unique<Employee>());
- }
- 
-void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
-    if (!findByPesel(pesel)){
+    university_.emplace_back(std::make_unique<Employee>());
+}
+
+void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary) {
+    if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
     }
 }
@@ -193,4 +207,69 @@ void University::importDatabase(const std::string& fileName) {
         Database.close();
     } else
         std::cout << "Unable to open file";
+}
+
+void University::fillDatabaseRandomly(size_t databaseSize) {
+    RNG generatorPersonType(0, 1);  // student = 0, employee = 1
+    RNG generatorGender(0, 1);      // male = 0, female = 1
+    RNG generatorFirstNameMale(0, std::size(firstNamesMale) - 1);
+    RNG generatorLastNameMale(0, std::size(lastNamesMale) - 1);
+    RNG generatorFirstNameFemale(0, std::size(firstNamesFemale) - 1);
+    RNG generatorLastNameFemale(0, std::size(lastNamesFemale) - 1);
+    RNG generatorAddress(0, std::size(addresses) - 1);
+    RNG generatorIndex(0, 999999);
+    RNG generatorPesel(9999999999, 99999999999);
+    RNG generatorSalary(1000, 5000);
+
+    size_t personTypeIdx;
+    size_t genderIdx;
+    size_t firstNameMaleIdx;
+    size_t lastNameMaleIdx;
+    size_t firstNameFemaleIdx;
+    size_t lastNameFemaleIdx;
+    size_t addressIdx;
+    size_t peselNumber;
+
+    std::string gender;
+    std::string firstName;
+    std::string lastName;
+    std::string address;
+    size_t index = 0;
+    std::string pesel;
+    double salary = 0;
+
+    for (size_t i = 0; i < databaseSize; i++) {
+        personTypeIdx = generatorPersonType.nextRandomNumber();
+        genderIdx = generatorGender.nextRandomNumber();
+        addressIdx = generatorAddress.nextRandomNumber();
+        address = addresses[addressIdx];
+        bool peselCheck = false;
+        while (peselCheck == 0) {
+            peselNumber = generatorPesel.nextRandomNumber();
+            pesel = std::to_string(peselNumber);
+            peselCheck = validationByPesel(pesel);
+        }
+
+        if (genderIdx == 0) {
+            gender = "man";
+            firstNameMaleIdx = generatorFirstNameMale.nextRandomNumber();
+            firstName = firstNamesMale[firstNameMaleIdx];
+            lastNameMaleIdx = generatorLastNameMale.nextRandomNumber();
+            lastName = lastNamesMale[lastNameMaleIdx];
+        } else if (genderIdx == 1) {
+            gender = "woman";
+            firstNameFemaleIdx = generatorFirstNameFemale.nextRandomNumber();
+            firstName = firstNamesFemale[firstNameFemaleIdx];
+            lastNameFemaleIdx = generatorLastNameFemale.nextRandomNumber();
+            lastName = lastNamesFemale[lastNameFemaleIdx];
+        }
+
+        if (personTypeIdx == 0) {
+            index = generatorIndex.nextRandomNumber();
+            addStudent(firstName, lastName, address, pesel, gender, index);
+        } else if (personTypeIdx == 1) {
+            salary = generatorSalary.nextRandomNumber();
+            addEmployee(firstName, lastName, address, pesel, gender, salary);
+        }
+    }
 }

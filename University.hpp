@@ -10,6 +10,7 @@
 #include "Employee.hpp"
 #include "Student.hpp"
 
+constexpr auto defaultUniversitySize = 10u;
 constexpr auto peselSize = 11u;
 
 class University {
@@ -17,6 +18,7 @@ class University {
 
    public:
     University();
+    University(size_t);
     ~University() = default;
 
     const std::vector<std::unique_ptr<Person>>& getVector() const;
@@ -34,6 +36,7 @@ class University {
     bool validationByPesel(const std::string&);
     void exportDatabase(const std::string&);
     void importDatabase(const std::string&);
+    void fillDatabaseRandomly(size_t);
     void removeByIndexNumber(size_t);
     void modifySalary(double, const std::string&);
 };

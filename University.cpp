@@ -1,16 +1,11 @@
 #include <algorithm>
 #include <typeinfo>
 #include <optional>
-<<<<<<< HEAD
-=======
 #include <string>
->>>>>>> 074b5dc... First version of random database filling
 
 #include "University.hpp"
 #include "Person.hpp"
 #include "Student.hpp"
-<<<<<<< HEAD
-=======
 #include "RandomNumberGenerator.hpp"
 
 using RNG = RandomNumberGenerator;
@@ -20,7 +15,6 @@ std::string lastNamesMale[] = {"Kowalski", "Wisniewski", "Bednarz"};
 std::string firstNamesFemale[] = {"Anna", "Barbara", "Martyna"};
 std::string lastNamesFemale[] = {"Kowalska", "Wisniewska", "Bednarz"};
 std::string addresses[] = {"Koscierzyna", "Wielun", "Sanok"};
->>>>>>> 074b5dc... First version of random database filling
 
 University::University() {
     university_.reserve(10);
@@ -41,13 +35,8 @@ void University::addStudent() {
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-<<<<<<< HEAD
-    if (!findByPesel(pesel)){
-        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
-=======
     if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
->>>>>>> 074b5dc... First version of random database filling
     }
 }
 

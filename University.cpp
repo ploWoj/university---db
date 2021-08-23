@@ -1,10 +1,26 @@
 #include <algorithm>
 #include <typeinfo>
 #include <optional>
+<<<<<<< HEAD
+=======
+#include <string>
+>>>>>>> 074b5dc... First version of random database filling
 
 #include "University.hpp"
 #include "Person.hpp"
 #include "Student.hpp"
+<<<<<<< HEAD
+=======
+#include "RandomNumberGenerator.hpp"
+
+using RNG = RandomNumberGenerator;
+
+std::string firstNamesMale[] = {"Piotr", "Grzegorz", "Tomasz"};
+std::string lastNamesMale[] = {"Kowalski", "Wisniewski", "Bednarz"};
+std::string firstNamesFemale[] = {"Anna", "Barbara", "Martyna"};
+std::string lastNamesFemale[] = {"Kowalska", "Wisniewska", "Bednarz"};
+std::string addresses[] = {"Koscierzyna", "Wielun", "Sanok"};
+>>>>>>> 074b5dc... First version of random database filling
 
 University::University() {
     university_.reserve(10);
@@ -25,17 +41,22 @@ void University::addStudent() {
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
+<<<<<<< HEAD
     if (!findByPesel(pesel)){
         university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender,indexNumber));
+=======
+    if (!findByPesel(pesel)) {
+        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
+>>>>>>> 074b5dc... First version of random database filling
     }
 }
 
 void University::addEmployee() {
-     university_.emplace_back(std::make_unique<Employee>());
- }
- 
-void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender,    double salary) {
-    if (!findByPesel(pesel)){
+    university_.emplace_back(std::make_unique<Employee>());
+}
+
+void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary) {
+    if (!findByPesel(pesel)) {
         university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
     }
 }
@@ -193,4 +214,65 @@ void University::importDatabase(const std::string& fileName) {
         Database.close();
     } else
         std::cout << "Unable to open file";
+}
+
+void University::fillDatabaseRandomly(size_t databaseSize) {
+    RNG generatorPersonType(0, 1);  // student = 0, employee = 1
+    RNG generatorGender(0, 1);      // male = 0, female = 1
+    RNG generatorFirstNameMale(0, std::size(firstNamesMale) - 1);
+    RNG generatorLastNameMale(0, std::size(lastNamesMale) - 1);
+    RNG generatorFirstNameFemale(0, std::size(firstNamesFemale) - 1);
+    RNG generatorLastNameFemale(0, std::size(lastNamesFemale) - 1);
+    RNG generatorAddress(0, std::size(addresses) - 1);
+    RNG generatorIndex(0, 999999);
+    RNG generatorPesel(0, 99999999999);
+    RNG generatorSalary(1000, 5000);
+
+    size_t personTypeIdx;
+    size_t genderIdx;
+    size_t firstNameMaleIdx;
+    size_t lastNameMaleIdx;
+    size_t firstNameFemaleIdx;
+    size_t lastNameFemaleIdx;
+    size_t addressIdx;
+    size_t peselNumber;
+
+    std::string gender;
+    std::string firstName;
+    std::string lastName;
+    std::string address;
+    size_t index = 0;
+    std::string pesel;
+    double salary = 0;
+
+    for (size_t i = 0; i < databaseSize; i++) {
+        personTypeIdx = generatorPersonType.nextRandomNumber();
+        genderIdx = generatorGender.nextRandomNumber();
+        addressIdx = generatorAddress.nextRandomNumber();
+        address = addresses[addressIdx];
+        peselNumber = generatorPesel.nextRandomNumber();
+        pesel = std::to_string(peselNumber);
+
+        if (genderIdx == 0) {
+            gender = "man";
+            firstNameMaleIdx = generatorFirstNameMale.nextRandomNumber();
+            firstName = firstNamesMale[firstNameMaleIdx];
+            lastNameMaleIdx = generatorLastNameMale.nextRandomNumber();
+            lastName = lastNamesMale[lastNameMaleIdx];
+        } else if (genderIdx == 1) {
+            gender = "woman";
+            firstNameFemaleIdx = generatorFirstNameFemale.nextRandomNumber();
+            firstName = firstNamesFemale[firstNameFemaleIdx];
+            lastNameFemaleIdx = generatorLastNameFemale.nextRandomNumber();
+            lastName = lastNamesFemale[lastNameFemaleIdx];
+        }
+
+        if (personTypeIdx == 0) {
+            index = generatorIndex.nextRandomNumber();
+            addStudent(firstName, lastName, address, pesel, gender, index);
+        } else if (personTypeIdx == 1) {
+            salary = generatorSalary.nextRandomNumber();
+            addEmployee(firstName, lastName, address, pesel, gender, salary);
+        }
+    }
 }

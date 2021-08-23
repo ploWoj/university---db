@@ -90,10 +90,17 @@ int main() {
     std::cout << "Datebase sorted by salary:\n";
     codersSchool.sortBySalary();
     codersSchool.displayBase();
-    std::cout << "\n=====================================\n";
 
     // std::cout << "Export database\n";
     // std::string fileName = "university.csv";
     // codersSchool.exportDatabase(fileName);
+
+    std::cout << "\n=====================================\n";
+    std::cout << "Database with randomly generated data:\n";
+    University universityRandom;
+    size_t databaseSize = 10;
+    universityRandom.fillDatabaseRandomly(databaseSize);
+    universityRandom.displayBase();
+
     return 0;
 }

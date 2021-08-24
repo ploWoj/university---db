@@ -1,6 +1,11 @@
 # Prerequisites
 *.d
 
+# Builds, test, IDE
+build/
+.vscode/
+googletest/
+
 # Compiled Object files
 *.slo
 *.lo

@@ -157,7 +157,7 @@ bool University::validationByPesel(const std::string& pesel) {
     return checkSum == lastNumber;
 }
 
-void University::exportDatabase(const std::string& fileName) {
+void University::exportDatabase(const std::string& fileName, bool& flag) {
     std::ofstream Database;
     Database.open(fileName);
     if (Database.is_open()) {
@@ -175,11 +175,13 @@ void University::exportDatabase(const std::string& fileName) {
             }
         }
         Database.close();
-    } else
-        std::cout << "Unable to save file\n";
+        flag = true;
+    } else {
+        flag = false;
+    }
 }
 
-void University::importDatabase(const std::string& fileName) {
+void University::importDatabase(const std::string& fileName, bool& flag) {
     std::ifstream Database(fileName);
     std::string element;
     std::array<std::string, 7> rowLine = {};
@@ -199,6 +201,8 @@ void University::importDatabase(const std::string& fileName) {
             }
         }
         Database.close();
-    } else
-        std::cout << "Unable to open file";
+        flag = true;
+    } else {
+        flag = false;
+    }
 }

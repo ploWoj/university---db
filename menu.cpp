@@ -67,6 +67,7 @@ void Menu::mainManu() {
             }
             break;
             case Order::SortByPesel: {
+                
                 message = menuSortByPesel();
             }
             break;
@@ -75,7 +76,7 @@ void Menu::mainManu() {
             }
             break;
             case Order::SortBySalary: {
-                
+                message = menuSortBySalary();
             }
             break;
             case Order::FindByPesel: {
@@ -95,10 +96,11 @@ void Menu::mainManu() {
             }
             break;
               case Order::SaveToFile : {
-                
+                message = menuSaveToFile();
             }
             break;
-              case Order::ReadFromFile : {
+              case Order::ReadFromFile : {  
+                  message = menuLoadFromFile();
                 
             }
             break;
@@ -193,4 +195,27 @@ std::string Menu::menuSortByPesel() {
 std::string Menu::menuSortBySurname() {
     db_.sortBySurname();
     return "Data base has been sorted by surname.";
+}
+
+std::string Menu::menuSaveToFile() {
+    std::cout << "Enter filename: ";
+    bool flag = false;
+    std::string filename;
+    std::cin >> filename;
+    db_.exportDatabase(filename, flag);
+    return flag ? "File save successfully" : "File unable to open";
+}
+
+std::string Menu::menuLoadFromFile() {
+    std::cout << "Enter filename: ";
+    bool flag = false;
+    std::string filename;
+    std::cin >> filename;
+    db_.importDatabase(filename,flag);
+    return flag ? "File has been loaded succesfully" : "File unable to open";
+}
+
+std::string Menu::menuSortBySalary() {
+    db_.sortBySalary();
+    return "Data base has been sorted by salary.";
 }

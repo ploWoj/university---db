@@ -8,13 +8,13 @@ enum class Order {
     PrintAll = 1,
     AddStudent,
     AddEmployee,
-    RemovePerson,
-    ChangeSalary,
     SortByPesel,
     SortBySurname,
     SortBySalary,
     FindByPesel,
     FindBySurname,
+    RemovePerson,
+    ChangeSalary,
     SaveToFile,
     ReadFromFile,
 };
@@ -46,6 +46,9 @@ public:
 
     std::string menuSortByPesel();
     std::string menuSortBySurname();
+    std::string menuSaveToFile();
+    std::string menuLoadFromFile();
+    std::string menuSortBySalary();
 
 private:
     University& db_;

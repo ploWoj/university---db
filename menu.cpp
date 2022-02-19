@@ -80,11 +80,11 @@ void Menu::mainManu() {
             }
             break;
             case Order::FindByPesel: {
-                
+                message = menuFindByPesel();
             }
             break;
               case Order::FindBySurname: {
-                
+                message = menuFindBySurname();
             }
             break;
               case Order::ChangeSalary : {
@@ -218,4 +218,32 @@ std::string Menu::menuLoadFromFile() {
 std::string Menu::menuSortBySalary() {
     db_.sortBySalary();
     return "Data base has been sorted by salary.";
+}
+
+
+
+std::string Menu::menuFindByPesel(){
+    std::string pesel;
+    std::cout << "Give pesel: ";
+    std::cin >> pesel;
+    if (db_.validationByPesel(pesel)) {
+        auto find = db_.findByPesel(pesel);
+        if (find) {
+            return "A person with the pesel " + pesel + ", has been found " + find->getName() + " " + find->getSurname()+".";
+        }
+        return "There is no person with that pesel number.";
+    }
+    return "Wrong pesel.";
+}
+
+std::string Menu::menuFindBySurname() {
+    std::string surname;
+    std::cout << "Give surname: ";
+    std::cin >> surname;
+    auto find = db_.findBySurname(surname);
+    if (find) {
+        find->display();
+        return "A pesron with the surname " + find->getSurname() + " exists";
+    }
+    return "A person with the surname: " + surname + "does not exists.";
 }

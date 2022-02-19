@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+
+
 enum class Order {
     PrintAll = 1,
     AddStudent,
@@ -29,7 +31,7 @@ public:
     constexpr const static uint8_t sexColumnWidth = 8;
     constexpr const static uint8_t indexNumberColumnWidth = 12;
     constexpr const static uint8_t salaryColumnWidth = 10;
-
+    
     Menu(University& db) : db_ (db){};
 
     void mainManu();
@@ -50,6 +52,8 @@ public:
     std::string menuLoadFromFile();
     std::string menuSortBySalary();
 
+    std::string menuFindByPesel();
+    std::string menuFindBySurname();
 private:
     University& db_;
 };

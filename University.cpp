@@ -76,16 +76,19 @@ Person* University::findByPesel(const std::string& pesel) {
 }
 
 void University::modifySalary(double newSalary, const std::string& pesel) {
-    auto it = std::find_if(begin(university_), end(university_), [pesel](auto const& person) {
-        return person->getPesel() == pesel;
-    });
-    if (it != end(university_)) {
-        if (Employee* e = dynamic_cast<Employee*>(it->get())) {
-            e->setSalary(newSalary);
-        } else {
-            std::cout << "ERROR: Students don't have salary\n";
-        }
+
+    auto person = findByPesel(pesel);
+    if(!person) {
+        std::cout << "A person with that pesel does not exists.\n";
+        return;
     }
+
+    if (Employee* e = dynamic_cast<Employee*>(person)) {
+            e->setSalary(newSalary);
+    } else {
+            std::cout << "ERROR: Students don't have salary\n";
+    }
+
 }
 void University::sortByPesel() {
     std::sort(university_.begin(), university_.end(),

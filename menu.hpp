@@ -15,8 +15,8 @@ enum class Order {
     SortBySalary,
     FindByPesel,
     FindBySurname,
-    RemovePerson,
     ChangeSalary,
+    RemovePerson,
     SaveToFile,
     ReadFromFile,
 };
@@ -31,6 +31,10 @@ public:
     constexpr const static uint8_t sexColumnWidth = 8;
     constexpr const static uint8_t indexNumberColumnWidth = 12;
     constexpr const static uint8_t salaryColumnWidth = 10;
+
+    constexpr const static size_t minSalary = 1500;
+    constexpr const static size_t maxSalary = 15000;
+    
     
     Menu(University& db) : db_ (db){};
 
@@ -54,6 +58,9 @@ public:
 
     std::string menuFindByPesel();
     std::string menuFindBySurname();
+    std::string changeSalary();
 private:
     University& db_;
+    double validateSalary(double&);
+    std::string validatepesel(std::string&);
 };

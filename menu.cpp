@@ -60,34 +60,42 @@ void Menu::mainManu() {
             break;
             case Order::AddStudent: {
                 menuAddStudent();
+               
             }
             break;
             case Order::AddEmployee: {
                 menuAddEmplyee();
+                
             }
             break;
             case Order::SortByPesel: {
                 
                 message = menuSortByPesel();
+               system("clear");
             }
             break;
             case Order::SortBySurname: {
                 message = menuSortBySurname();
+               system("clear");
             }
             break;
             case Order::SortBySalary: {
                 message = menuSortBySalary();
+                system("clear");
             }
             break;
             case Order::FindByPesel: {
                 message = menuFindByPesel();
+                
             }
             break;
               case Order::FindBySurname: {
                 message = menuFindBySurname();
+                
             }
             break;
               case Order::ChangeSalary : {
+                message = changeSalary();
                 
             }
             break;
@@ -234,6 +242,39 @@ std::string Menu::menuFindByPesel(){
         return "There is no person with that pesel number.";
     }
     return "Wrong pesel.";
+}
+
+double Menu::validateSalary(double& newSalary) {
+    std::cout << "Give new salary (1500 - 15000).\n";
+    std::cin >> newSalary;
+    
+    while (newSalary > maxSalary || newSalary < minSalary) {
+        std::cout << "Salary out of bands.\n";
+        std::cout << "Give new salary.\n";
+        std::cin >> newSalary;
+        
+    }
+    return newSalary;
+}
+
+
+std::string Menu::validatepesel(std::string& pesel) {
+    std::cout << "Give a pesel number";
+    std::cin >> pesel;
+     while (!db_.validationByPesel(pesel)) {
+        std::cout << "wrong pesel\n";
+        std::cout << "Give a pesel number";
+        std::cin >> pesel;
+    }
+    return pesel;
+} 
+std::string Menu::changeSalary() {
+    double newSalary = -1.5;
+    std::string pesel{""};
+    newSalary = validateSalary(newSalary);
+    pesel = validatepesel(pesel);
+    db_.modifySalary(newSalary, pesel);
+    return "Salary has been changed.";
 }
 
 std::string Menu::menuFindBySurname() {

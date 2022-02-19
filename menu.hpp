@@ -21,7 +21,11 @@ enum class Order {
 
 class Menu {
 public:
-    Menu(University& db);
+    Menu(University& db) : db_ (db){};
+
+    void printMainManu() const;
+    void printHeader();
+    
 
 private:
     University& db_;

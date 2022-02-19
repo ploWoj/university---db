@@ -25,8 +25,12 @@ void University::addStudent() {
 }
 
 void University::addStudent(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, size_t indexNumber) {
-    if (!findByPesel(pesel)) {
-        university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
+    if( validationByPesel(pesel)) {
+        if (!findByPesel(pesel)) {
+            university_.emplace_back(std::make_unique<Student>(name, surname, address, pesel, gender, indexNumber));
+         }
+    } else {
+        std::cout << "Wrong pesel number.\n";
     }
 }
 
@@ -35,8 +39,12 @@ void University::addEmployee() {
 }
 
 void University::addEmployee(std::string name, std::string surname, std::string address, std::string pesel, std::string gender, double salary) {
-    if (!findByPesel(pesel)) {
-        university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
+    if( validationByPesel(pesel)) {
+        if (!findByPesel(pesel)) {
+            university_.emplace_back(std::make_unique<Employee>(name, surname, address, pesel, gender, salary));
+         }
+    } else {
+        std::cout << "Wrong pesel number.\n";
     }
 }
 

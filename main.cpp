@@ -63,6 +63,6 @@ int main() {
     // std::string fileName = "university.csv";
     // codersSchool.exportDatabase(fileName);
     Menu menu(codersSchool);
-    menu.printMainManu();
+    menu.mainManu();
     return 0;
 }

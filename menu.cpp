@@ -63,15 +63,15 @@ void Menu::mainManu() {
             }
             break;
             case Order::AddEmployee: {
-                
-            }
-            break;
-            case Order::SortBySurname: {
-                
+                menuAddEmplyee();
             }
             break;
             case Order::SortByPesel: {
-                
+                message = menuSortByPesel();
+            }
+            break;
+            case Order::SortBySurname: {
+                message = menuSortBySurname();
             }
             break;
             case Order::SortBySalary: {
@@ -180,7 +180,17 @@ void Menu::menuAddEmplyee() {
     std::cin >> pesel;
     std::cout << "Give your gender (woman/ man): ";
     std::cin >> gender;
-    std::cout << "Give yout index number: ";
+    std::cout << "Give your salar: ";
     std::cin >> salary;
     db_.addEmployee(name, surname, address, pesel, gender, salary);
+}
+
+std::string Menu::menuSortByPesel() {
+    db_.sortByPesel();
+    return "Data base has been sorted by pesel.";
+}
+
+std::string Menu::menuSortBySurname() {
+    db_.sortBySurname();
+    return "Data base has been sorted by surname.";
 }

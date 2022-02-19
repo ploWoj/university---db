@@ -44,6 +44,9 @@ public:
     void menuAddStudent();
     void menuAddEmplyee();
 
+    std::string menuSortByPesel();
+    std::string menuSortBySurname();
+
 private:
     University& db_;
 };

@@ -10,7 +10,7 @@
 
 class Student : public Person {
 private:
-    size_t indexNumber_{0};
+    size_t indexNumber_ { 0 };
 
 public:
     void setIndex(const size_t);
@@ -18,7 +18,7 @@ public:
     size_t getIndex() const;
 
     // Functions ovverride from class Person
-    double getSalary() const override { return  0.0; }
+    double getSalary() const override { return 0.0; }
     void display() override;
 
     Student() = default;

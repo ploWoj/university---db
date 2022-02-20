@@ -7,14 +7,14 @@
 #include <vector>
 
 class Person {
-   protected:
+protected:
     std::string name_ = "";
     std::string surname_ = "";
     std::string address_ = "";
     std::string pesel_ = "";
     std::string gender_ = "";
 
-   public:
+public:
     void setName(const std::string&);
     void setSurname(const std::string&);
     void setAddress(const std::string&);

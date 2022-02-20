@@ -34,6 +34,6 @@ public:
     bool validationByPesel(const std::string&);
     void exportDatabase(const std::string&, bool&);
     void importDatabase(const std::string&, bool&);
-    void removeByIndexNumber(size_t);
+    void removeByIndexNumber(size_t, std::string& );
     void modifySalary(double, const std::string&);
 };

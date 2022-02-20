@@ -7,13 +7,12 @@ void Menu::printMainManu() const {
     std::cout << std::setw(itemSize) << "[ 1] Print DB"
               << std::setw(itemSize) << "[ 4] Sort by Pesel"
               << std::setw(itemSize) << "[ 7] Find by Pesel"
-              << std::setw(itemSize) << "[10] Remove Student" 
+              << std::setw(itemSize) << "[10] Remove Person" 
               << std::setw(itemSize) << "[ 0] Quit" <<  '\n'
               << std::setw(itemSize) << "[ 2] Add Student"
               << std::setw(itemSize) << "[ 5] Sort by surnname"
               << std::setw(itemSize) << "[ 8] Find surnname"
               << std::setw(itemSize) << "[11] Save to file" << '\n'
-              
               << std::setw(itemSize) << "[ 3] Add Emplyee"
               << std::setw(itemSize) << "[ 6] Sort by salary"
               << std::setw(itemSize) << "[ 9] Change salary"
@@ -71,17 +70,17 @@ void Menu::mainManu() {
             case Order::SortByPesel: {
                 
                 message = menuSortByPesel();
-               system("clear");
+               
             }
             break;
             case Order::SortBySurname: {
                 message = menuSortBySurname();
-               system("clear");
+               
             }
             break;
             case Order::SortBySalary: {
                 message = menuSortBySalary();
-                system("clear");
+                
             }
             break;
             case Order::FindByPesel: {
@@ -95,12 +94,12 @@ void Menu::mainManu() {
             }
             break;
               case Order::ChangeSalary : {
-                message = changeSalary();
+                message = menuChangeSalary();
                 
             }
             break;
               case Order::RemovePerson: {
-                
+                message = menuRemovePerson();
             }
             break;
               case Order::SaveToFile : {
@@ -196,14 +195,16 @@ void Menu::menuAddEmplyee() {
 }
 
 std::string Menu::menuSortByPesel() {
+    system("clear");
     db_.sortByPesel();
     return "Data base has been sorted by pesel.";
 }
 
 std::string Menu::menuSortBySurname() {
+    system("clear");
     db_.sortBySurname();
     return "Data base has been sorted by surname.";
-}
+    }
 
 std::string Menu::menuSaveToFile() {
     std::cout << "Enter filename: ";
@@ -224,11 +225,11 @@ std::string Menu::menuLoadFromFile() {
 }
 
 std::string Menu::menuSortBySalary() {
+    system("clear");
     db_.sortBySalary();
     return "Data base has been sorted by salary.";
+    
 }
-
-
 
 std::string Menu::menuFindByPesel(){
     std::string pesel;
@@ -268,7 +269,7 @@ std::string Menu::validatepesel(std::string& pesel) {
     }
     return pesel;
 } 
-std::string Menu::changeSalary() {
+std::string Menu::menuChangeSalary() {
     double newSalary = -1.5;
     std::string pesel{""};
     newSalary = validateSalary(newSalary);
@@ -287,4 +288,13 @@ std::string Menu::menuFindBySurname() {
         return "A pesron with the surname " + find->getSurname() + " exists";
     }
     return "A person with the surname: " + surname + "does not exists.";
+}
+
+std::string Menu::menuRemovePerson() {
+    std::string message{""};
+    size_t index = 0;
+    std::cout << "Give an index number you want to earase.\n";
+    std::cin >> index;
+    db_.removeByIndexNumber(index, message);
+    return message;
 }

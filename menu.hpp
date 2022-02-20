@@ -5,7 +5,6 @@
 #include <iostream>
 
 
-
 enum class Order {
     PrintAll = 1,
     AddStudent,
@@ -58,7 +57,9 @@ public:
 
     std::string menuFindByPesel();
     std::string menuFindBySurname();
-    std::string changeSalary();
+    std::string menuChangeSalary();
+    std::string menuRemovePerson();
+
 private:
     University& db_;
     double validateSalary(double&);

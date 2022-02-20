@@ -118,17 +118,26 @@ void University::sortBySalary() {
               });
 }
 
-void University::removeByIndexNumber(size_t indexNumber) {
+std::optional<size_t> getIndexIfIs(const std::unique_ptr<Person>& person) {
+    if (auto* student = dynamic_cast<Student*>(person.get())) {
+        return student->getIndex();
+    }
+    return std::nullopt;
+}
+
+void University::removeByIndexNumber(size_t indexNumber, std::string& message) {
     size_t i = 0;
     for (const auto& el : university_) {
         if (auto s = dynamic_cast<Student*>(el.get())) {
             if (s->getIndex() == indexNumber) {
                 university_.erase(university_.begin() + i);
-                break;
+                message = "Remove successfully.\n";
+                return;
             }
         }
         i++;
     }
+    message = "No student with that index number in data base.\n";
 }
 
 bool University::validationByPesel(const std::string& pesel) {

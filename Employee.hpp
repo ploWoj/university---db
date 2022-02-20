@@ -8,9 +8,6 @@ private:
 
 public:
     void setSalary(const double&);
- 
-    
-    // Functions ovverride from class Person
     double getSalary() const override;
     void display() override;
  

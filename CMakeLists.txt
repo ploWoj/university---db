@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(university---db)
 
-set(SOURCE Student.cpp University.cpp Employee.cpp menu.cpp Person.cpp catch_amalgamated.cpp catch_main.cpp test.cpp)
+set(SOURCE Student.cpp University.cpp Employee.cpp Menu.cpp Person.cpp catch_amalgamated.cpp catch_main.cpp test.cpp)
 set(FLAGS -Wall -Wextra  -O3)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SOURCE})
